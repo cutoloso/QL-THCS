@@ -16,7 +16,7 @@ class CreatePhongTable extends Migration
         Schema::create('Phong', function (Blueprint $table) {
             $table->char('p_ma',3)->comment('Mã phòng');
             $table->unsignedSmallInteger('p_sucChua')->nullable()->comment('Sức chứa của phòng');
-            $table->string('p_ghiChu')->comment('Ghi chú phòng');
+            $table->string('p_ghiChu')->nullable()->comment('Ghi chú phòng');
             // $table->timestamp('p_taoMoi')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Thời điểm tạo mới');
 
             // $table->timestamp('p_capnhat')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Thời điểm cập nhật gần nhất');

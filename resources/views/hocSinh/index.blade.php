@@ -1,21 +1,6 @@
 @extends('layouts.master')
 @section('head.css')
 <style>
-	table {
-	  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	  border-collapse: collapse;
-	  width: 100%;
-	}
-
-	table td, table th {
-	  border: 1px solid #ddd;
-	  padding: 5px;
-	}
-
-	table tr:nth-child(even){background-color: #f2f2f2;}
-
-	table tr:hover {background-color: #ddd;}
-
 	table th {
 	  padding-top: 8px;
 	  padding-bottom: 8px;
@@ -33,41 +18,77 @@
 	}
 </style>
 @endsection
-@section('body.title','Danh sách giáo viên')
+@section('body.title','Danh sách học sinh theo lớp')
 @section('body.content')
-<div ng-controller="GiaoVienController">
-	<table>
-	  <tr>
-	    <th>Mã</th>
-	    <th>Họ tên</th>
-	    <th>Ngày sinh</th>
-	    <th>Phái</th>
-	    <th>Địa chỉ</th>
-	    <th>Email</th>
-	    <th>Điện thoại</th>
-	    <th>Mã chuyên môn</th>
-	    <th colspan="2" class="text-center">
-	    	<a href=""  ng-click="modal('add')" ><i class="fas fa-user-plus" ></i></a>
-	    </th>
-	  </tr>
-	  <tr ng-repeat="gv in ds_giaoVien | orderBy : 'cm_ma'">
-	    <td><% gv.gv_ma %></td>
-	    <td><% gv.gv_hoTen %></td>
-	    <td><% gv.gv_ngaySinh %></td>
-	    <td><% gv.gv_phai %></td>
-	    <td><% gv.gv_diaChi %></td>
-	    <td><% gv.gv_email %></td>
-	    <td><% gv.gv_dienThoai %></td>
-	    <td><% gv.cm_ma %></td>
-	    <td>
-	    	<a href="" ng-click="modal('edit')" ><i class="fas fa-user-edit"></i></a>
-	    </td>
-	    <td>
-	    	<a href=""><i class="fas fa-user-minus"></i></a>
-	    </td> 
-	  </tr>
-	</table>
-
+<div ng-controller="HocSinhController" style="width: 100%;">
+	{{-- <div class="form-group">
+		<label for="khoi">Khối : </label>
+		<select name="khoi" id="khoi" ng-model="hocsinh.khoi" ng-change="reLoadPage()" ng->
+			<option value="">---Vui lòng chọn--</option>
+ 			<option value="6">6</option>
+ 			<option value="7">7</option>
+ 			<option value="8">8</option>
+ 			<option value="9">9</option>
+ 		</select>
+	</div> --}}
+	<div class="form-group">
+		<label for="kh_khoaHoc">Khóa hoc: </label>
+		<select name="kh_khoaHoc" id="kh_khoaHoc" ng-model="hocsinh.kh_khoaHoc" ng-change="reLoadPage()">
+			{{-- <option value="">---Vui lòng chọn--</option> --}}
+ 			<option ng-repeat="kh in ds_kh" ng-value="kh.kh_khoaHoc" value="<% kh.kh_khoaHoc %>"><% kh.kh_khoaHoc %></option>
+ 		</select>
+	</div>
+	{{-- <select ng-model="hocsinh.kh_khoaHoc" ng-options="kh.kh_khoaHoc for kh in ds_kh" ng-change="reLoadPage()">
+      </select> --}}
+	<div class="form-group">
+		<label for="l_ma">Lớp: </label>
+		<select name="l_ma" id="l_ma" ng-model="hocsinh.l_ma" ng-change="reLoadPage()">
+			<option value="">---Vui lòng chọn--</option>
+ 			<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
+ 		</select>
+	</div>
+	{{-- <select ng-model="hocsinh.l_ma" ng-options="l.l_ma for l in ds_lop" ng-change="reLoadPage()">
+      </select> --}}
+	<br>
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+		  <tr>
+		    <th>Lớp</th>
+		    <th ng-click="sort()" style="cursor: pointer;">Mã <i class="fa fa-caret-<% sortReverse? 'up':'down' %>"></i></th>
+		    <th>Họ tên</th>
+		    <th>Ngày sinh</th>
+		    <th>Phái</th>
+		    <th>Địa chỉ</th>
+		    <th>Mã phụ huynh</th>
+		    <th>Tốt nghiệp</th>
+		    <th colspan="2" class="text-center">
+		    	<a href=""  ng-click="modal('add')" ><i class="fas fa-user-plus" ></i></a>
+		    </th>
+		  </tr>
+		  <tr ng-repeat="hs in ds_hs | orderBy : sortExpression: sortReverse">
+		    <td>
+		    	<% now-hs.kh_khoaHoc < 3 ? (now-hs.kh_khoaHoc+6):'9' %> <%hs.l_ma%>
+		    </td>
+		    <td><% hs.hs_ma %></td>
+		    <td><% hs.hs_hoTen %></td>
+		    <td  ng-bind="hs.hs_ngaySinh | date: 'dd/MM/yyyy'"></td>
+			<td><% hs.hs_phai > 0 ? 'Nam':'Nữ' %></td>
+		    <td><% hs.hs_diaChi %></td>
+		    <td><% hs.ph_ma %></td>
+		    <td class="text-center">
+		    	@if(Auth::user()->status == 0) <i class="fas fa-check"></i>
+		    	@else <i class="fas fa-times"></i>
+		    	@endif
+		    </td>
+		    <td class="text-center">
+		    	<a href="" ng-click="modal('edit',hs.hs_ma)" ><i class="fas fa-user-edit"></i></a>
+		    </td>
+		    <td class="text-center">
+		    	<a href=""><i class="fas fa-user-minus" ng-click="confirmDelete(hs.hs_ma)"></i></a>
+		    </td> 
+		  </tr>
+		</table>
+	</div>
 	<!-- The Modal -->
 	<div class="modal fade" id="myModal">
 	  <div class="modal-dialog">
@@ -79,71 +100,58 @@
 	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 	      	</div>
 
-	      	<form action="" name="frmGiaoVien">
+	      	<form action="" name="frmHocSinh">
 	      	<!-- Modal body -->
 	      		<div class="modal-body">
 
 		         	<div class="form-group">
-		         		<label for="gv_ma">Mã:</label>
-		         		<input type="text" class="form-control" id="gv_ma" name="gv_ma" placeholder="" ng-model="giaovien.gv_ma" required="true" ng-maxlength="8">
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_ma.$error.required">Bạn chưa nhập mã</span>
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_ma.$error.maxlength">Mã không hợp lệ</span>
+		         		<label for="hs_ma">Mã:</label>
+		         		<input type="text" class="form-control" id="hs_ma" name="hs_ma" placeholder="" ng-model="hocsinh.hs_ma" ng-readonly="readOnly" required="true" ng-maxlength="10" autofocus>
+		         		<span class="text-danger" ng-show="frmHocSinh.hs_ma.$error.required">Bạn chưa nhập mã</span>
+		         		<span class="text-danger" ng-show="frmHocSinh.hs_ma.$error.maxlength">Mã không hợp lệ</span>
 		         	</div>
 		         	<div class="form-group">
-		         		<label for="gv_hoTen">Họ tên:</label>
-		         		<input type="text" class="form-control" id="gv_hoTen" name="gv_hoTen" placeholder="" ng-model="giaovien.gv_hoTen" required="true" ng-maxlength="100">
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_hoTen.$error.required">Bạn chưa nhập họ tên</span>
+		         		<label for="hs_hoTen">Họ tên:</label>
+		         		<input type="text" class="form-control" id="hs_hoTen" name="hs_hoTen" placeholder="" ng-model="hocsinh.hs_hoTen" required="true" ng-maxlength="100">
+		         		<span class="text-danger" ng-show="frmHocSinh.hs_hoTen.$error.required">Bạn chưa nhập họ tên</span>
 		         	</div>
 		         	<div class="form-group">
-		         		<label for="gv_ngaySinh">Ngày sinh:</label>
-		         		<input type="date" class="form-control" id="gv_ngaySinh" name="gv_ngaySinh" placeholder="" ng-model="giaovien.gv_ngaySinh">
+		         		<label for="hs_ngaySinh">Ngày sinh:</label>
+		         		<input type="date" class="form-control" id="hs_ngaySinh" name="hs_ngaySinh" ng-model="hocsinh.hs_ngaySinh">
+					</div>
+		         	<div class="form-group">
+		         		<label for="hs_phai">Phái:</label><br>
+		         		<input ng-model="hocsinh.hs_phai" type="radio" name="hs_phai" ng-value="1"> Nam
+		         		<input ng-model="hocsinh.hs_phai" type="radio" name="hs_phai" ng-value="0" > Nữ<br>
 		         	</div>
 		         	<div class="form-group">
-		         		<label for="gv_phai">Phái:</label>
-		         		<select name="gv_phai" id="gv_phai">
-		         			<option value="0">Nữ</option>
-		         			<option value="1">Nam</option>
+		         		<label for="hs_diaChi">Địa chỉ:</label>
+		         		<input type="text" class="form-control" id="hs_diaChi"  name="hs_diaChi" placeholder="" ng-model="hocsinh.hs_diaChi" required="true">
+		         		<span class="text-danger" ng-show="frmHocSinh.hs_diaChi.$error.required">Bạn chưa nhập địa chỉ</span>
+		         	</div>
+		         	<div class="form-group">
+		         		<label for="ph_ma">Mã phụ huynh:</label>
+		         		<select class="custom-select" name="ph_ma" id="ph_ma" ng-model="hocsinh.ph_ma">
+		         			<option value="">Mã - Họ Tên</option>
+		         			<option ng-repeat="ph in ds_ph" ng-value="ph.ph_ma" value="<% ph.ph_ma %>"><% ph.ph_ma %> - <% ph.ph_hoTen%></option>
 		         		</select>
 		         	</div>
 		         	<div class="form-group">
-		         		<label for="gv_diaChi">Địa chỉ:</label>
-		         		<input type="text" class="form-control" id="gv_diaChi"  name="gv_diaChi" placeholder="" ng-model="giaovien.gv_diaChi" required="true">
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_diaChi.$error.required">Bạn chưa nhập địa chỉ</span>
+		         		<label for="hs_matKhau">Mật khẩu:</label>
+		         		<input type="password" class="form-control" id="hs_matKhau" name="hs_matKhau" placeholder="" ng-model="hocsinh.hs_matKhau" ng-maxlength="32" ng-blur="compare()">
+		         		<span class="text-danger" ng-show="frmHocSinh.hs_matKhau.$error.maxlength">Mật khẩu không hợp lệ</span>
 		         	</div>
 		         	<div class="form-group">
-		         		<label for="gv_email">Địa chỉ email:</label>
-		         		<input type="email" class="form-control" id="gv_email" name="gv_email" placeholder="" ng-model="giaovien.gv_email" required="true">
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_email.$error.required">Bạn chưa nhập email</span>
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_email.$error.email">Email không hợp lệ</span>         		
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="gv_matKhau">Mật khẩu:</label>
-		         		<input type="password" class="form-control" id="gv_matKhau" name="gv_matKhau" placeholder="" ng-model="giaovien.gv_matKhau" ng-maxlength="32">
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_matKhau.$error.maxlength">Mật khẩu không hợp lệ</span>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="gv_matKhau_repeat">Nhập lại mật khẩu:</label>
-		         		<input type="password" class="form-control" id="gv_matKhau_repeat" name="gv_matKhau_repeat" placeholder="" ng-model="giaovien.gv_matKhau_repeat" ng-maxlength="32">
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_matKhau_repeat == frmGiaoVien.gv_matKhau">Mật khẩu không hợp lệ</span>
-		         	</div>
-
-		         	<div class="form-group">
-		         		<label for="gv_dienThoai">Điện thoại:</label>
-		         		<input type="text" class="form-control" id="gv_dienThoai" name="gv_dienThoai" placeholder="" ng-model="giaovien.gv_dienThoai" ng-maxlength="11">
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_dienThoai.$error.maxlength">Số điện thoại không hợp lệ</span>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="cm_ma">Mã chuyên môn:</label>
-		         		<select name="cm_ma" id="cm_ma">
-		         			<option value="<% cm.cm_ma %>" ng-repeat="cm in ds_toCM"><% cm.cm_moTa %></option>
-		         		</select>
+		         		<label for="hs_matKhau_repeat">Nhập lại mật khẩu:</label>
+		         		<input type="password" class="form-control" id="hs_matKhau_repeat" name="hs_matKhau_repeat" placeholder="" ng-model="hocsinh.hs_matKhau_repeat" ng-maxlength="32" ng-blur="compare()">
+		         		<span class="text-danger" ng-show="passError">Mật khẩu không hợp lệ</span>
 		         	</div>
 		        
 	      		</div>
 
 	      		<!-- Modal footer -->
 	      		<div class="modal-footer" >
-		        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="frmGiaoVien.$invalid" ng-click="save(state)">Lưu</button>
+		        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="frmHocSinh.$invalid" ng-click="save(state,hocsinh.hs_ma)">Lưu</button>
 		      	</div>
 			</form>
 	      	
@@ -151,4 +159,8 @@
 	  </div>
 	</div>
 </div>
+
+@endsection
+@section('body.js')
+	<script type="text/javaScript" src="{{asset('app/HocSinhController.js')}}"></script>
 @endsection

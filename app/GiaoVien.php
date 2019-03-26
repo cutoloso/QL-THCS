@@ -15,4 +15,5 @@ class GiaoVien extends Model
     protected $dateFormat = 'Y/m/d ';
     public $incrementing = false;
     public $timestamps = false;
+
 }

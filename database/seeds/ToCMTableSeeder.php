@@ -13,6 +13,7 @@ class ToCMTableSeeder extends Seeder
     {
         //
         DB::table('ToCM')->insert([
+            ['cm_ma'=>'GT','cm_moTa'=>'Gíam thị'],
         	['cm_ma'=>'T','cm_moTa'=>'Toán học'],
         	['cm_ma'=>'VL','cm_moTa'=>'Vật lý'],
         	['cm_ma'=>'HH','cm_moTa'=>'Hóa học (dành cho học sinh lớp 8, 9)'],

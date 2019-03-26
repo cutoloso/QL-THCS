@@ -1,22 +1,44 @@
 app.controller('GiaoVienController',function($scope,$http,URL_Main){
-	$http.get(URL_Main + 'giao-vien/').then(function(response){
-		$scope.ds_giaoVien = response.data.message.ds_GiaoVien;
-		// console.log(response.data.message.ds_GiaoVien);
-	});
+	
+	function fillData() {
+		$http.get(URL_Main + 'giao-vien/').then(function(response){
+			$scope.ds_gv = response.data.message.ds_GiaoVien;
+			// console.log(response.data.message.ds_GiaoVien);
+		});
+	}
+	fillData();
 
 	$http.get(URL_Main + 'to-cm/').then(function(response){
 		$scope.ds_toCM = response.data.message.ds_ToCM;
 	});
 
+	$scope.sortExpression = 'gv_ma';
+	$scope.sortReverse = true;
+	$scope.sort = function() {
+		$scope.sortReverse = !$scope.sortReverse;
+	}
+	
 	$scope.modal = function(state,gv_ma){
 		$scope.state  = state;
 		
 		switch(state){
 			case "add":
 				$scope.frmTitle = "Thêm giáo viên";
+				$scope.readOnly=false;
+				$scope.giaovien = {
+					'gv_ma':'',
+					'gv_matKhau':'',
+					'gv_hoTen':'',
+					'gv_phai':1,
+					'gv_diaChi':'',
+					'gv_email':'',
+					'gv_dienThoai':'',
+					'cm_ma':'T',
+					'q_ma':'2'
+				};
 				break;
 			case "edit":
-				$scope.readOnly='true';
+				$scope.readOnly=true;
 				$scope.frmTitle = "Sửa giáo viên";
 				$scope.gv_ma = gv_ma;
 				$http.get(URL_Main + 'giao-vien/' + gv_ma).then(function(response){
@@ -26,7 +48,9 @@ app.controller('GiaoVienController',function($scope,$http,URL_Main){
 				});
 				break;
 		}
+		// Hiện form
 		$('#myModal').modal('show');
+		// Kiểm tra mật khẩu
 		$scope.passError = false;
 		$scope.compare = function() {
 			if (angular.equals($scope.giaovien.gv_matKhau, $scope.giaovien.gv_matKhau_repeat)) {
@@ -48,8 +72,8 @@ app.controller('GiaoVienController',function($scope,$http,URL_Main){
 				  	data: data,
 				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				  	}).then(function(response) {
-							location.reload();
-					  }, function (error) {
+						fillData();
+				  	}, function (error) {
 					    console.log(error);
 					  }); 
 					break;
@@ -61,7 +85,7 @@ app.controller('GiaoVienController',function($scope,$http,URL_Main){
 				  	data: data,
 				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				  	}).then(function(response) {
-							location.reload();
+							fillData();
 					  	}, function (error) {
 					    console.log(error);
 					  	}); 
@@ -73,7 +97,7 @@ app.controller('GiaoVienController',function($scope,$http,URL_Main){
 		if(confirm('Bạn có chắc muốn xóa không ?')){
 			$http.delete(URL_Main + 'giao-vien/' + gv_ma).
 				then(function (response) {
-					location.reload();
+					fillData();
 				},function (error) {
 					console.log(error);
 				});

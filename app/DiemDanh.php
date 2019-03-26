@@ -11,6 +11,6 @@ class DiemDanh extends Model
     protected $fillable = ['hs_ma','dd_ngay'];
     protected $primaryKey = ['hs_ma','dd_ngay'];
     protected $dates = ['dd_ngay'];
-    protected $dateFormat = 'Y-m-d';
+    protected $dateFormat = 'Y/m/d ';
     public $incrementing = false;
 }

@@ -1,21 +1,6 @@
 @extends('layouts.master')
 @section('head.css')
 <style>
-	table {
-	  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	  border-collapse: collapse;
-	  width: 100%;
-	}
-
-	table td, table th {
-	  border: 1px solid #ddd;
-	  padding: 5px;
-	}
-
-	table tr:nth-child(even){background-color: #f2f2f2;}
-
-	table tr:hover {background-color: #ddd;}
-
 	table th {
 	  padding-top: 8px;
 	  padding-bottom: 8px;
@@ -35,38 +20,41 @@
 @endsection
 @section('body.title','Danh sách giáo viên')
 @section('body.content')
-<div ng-controller="GiaoVienController">
-	<table>
-	  <tr>
-	    <th>Mã</th>
-	    <th>Họ tên</th>
-	    <th>Ngày sinh</th>
-	    <th>Phái</th>
-	    <th>Địa chỉ</th>
-	    <th>Email</th>
-	    <th>Điện thoại</th>
-	    <th>Mã chuyên môn</th>
-	    <th colspan="2" class="text-center">
-	    	<a href=""  ng-click="modal('add')" ><i class="fas fa-user-plus" ></i></a>
-	    </th>
-	  </tr>
-	  <tr ng-repeat="gv in ds_giaoVien | orderBy : 'cm_ma'">
-	    <td><% gv.gv_ma %></td>
-	    <td><% gv.gv_hoTen %></td>
-	    <td><% gv.gv_ngaySinh %></td>
-	    <td><% gv.gv_phai %></td>
-	    <td><% gv.gv_diaChi %></td>
-	    <td><% gv.gv_email %></td>
-	    <td><% gv.gv_dienThoai %></td>
-	    <td><% gv.cm_ma %></td>
-	    <td>
-	    	<a href="" ng-click="modal('edit',gv.gv_ma)" ><i class="fas fa-user-edit"></i></a>
-	    </td>
-	    <td>
-	    	<a href=""><i class="fas fa-user-minus" ng-click="confirmDelete(gv.gv_ma)"></i></a>
-	    </td> 
-	  </tr>
-	</table>
+
+<div ng-controller="GiaoVienController" style="width: 100%;">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+		  <tr>
+		    <th ng-click="sort()" style="cursor: pointer;">Mã <i class="fa fa-caret-<% sortReverse? 'up':'down' %>"></i></th>
+		    <th>Họ tên</th>
+		    <th>Ngày sinh</th>
+		    <th>Phái</th>
+		    <th>Địa chỉ</th>
+		    <th>Email</th>
+		    <th>Điện thoại</th>
+		    <th>Mã chuyên môn</th>
+		    <th colspan="2" class="text-center">
+		    	<a href=""  ng-click="modal('add')" ><i class="fas fa-user-plus" ></i></a>
+		    </th>
+		  </tr>
+		  <tr ng-repeat="gv in ds_gv | orderBy : sortExpression: sortReverse">
+		    <td><% gv.gv_ma %></td>
+		    <td><% gv.gv_hoTen %></td>
+		    <td ng-bind="gv.gv_ngaySinh | date: 'dd/MM/yyyy'"><% gv.gv_ngaySinh %></td>
+			<td><% gv.gv_phai > 0 ? 'Nam':'Nữ' %></td>
+		    <td><% gv.gv_diaChi %></td>
+		    <td><% gv.gv_email %></td>
+		    <td><% gv.gv_dienThoai %></td>
+		    <td><% gv.cm_ma %></td>
+		    <td class="text-center">
+		    	<a href="" ng-click="modal('edit',gv.gv_ma)" ><i class="fas fa-user-edit"></i></a>
+		    </td>
+		    <td class="text-center">
+		    	<a href=""><i class="fas fa-user-minus" ng-click="confirmDelete(gv.gv_ma)"></i></a>
+		    </td> 
+		  </tr>
+		</table>
+	</div>
 
 	<!-- The Modal -->
 	<div class="modal fade" id="myModal">
@@ -100,11 +88,9 @@
 
 					</div>
 		         	<div class="form-group">
-		         		<label for="gv_phai">Phái:</label>
-		         		<select name="gv_phai" id="gv_phai" ng-model="giaovien.gv_phai">
-		         			<option value="0">Nữ</option>
-		         			<option ng-selected="true" value="1">Nam</option>
-		         		</select>
+		         		<label for="gv_phai">Phái:</label><br>
+		         		<input ng-model="giaovien.gv_phai" type="radio" name="gv_phai" ng-value="1"> Nam
+		         		<input ng-model="giaovien.gv_phai" type="radio" name="gv_phai" ng-value="0" > Nữ<br>
 		         	</div>
 		         	<div class="form-group">
 		         		<label for="gv_diaChi">Địa chỉ:</label>
@@ -135,8 +121,8 @@
 		         	</div>
 		         	<div class="form-group">
 		         		<label for="cm_ma">Mã chuyên môn:</label>
-		         		<select name="cm_ma" id="cm_ma" ng-model="giaovien.cm_ma">
-		         			<option value="<% cm.cm_ma %>" ng-repeat="cm in ds_toCM"><% cm.cm_moTa %></option>
+		         		<select class="custom-select" name="cm_ma" id="cm_ma" ng-model="giaovien.cm_ma">
+		         			<option ng-repeat="cm in ds_toCM" ng-value="cm.cm_ma" value="<% cm.cm_ma %>"><% cm.cm_moTa %></option>
 		         		</select>
 		         	</div>
 		        
@@ -146,9 +132,8 @@
 	      		<div class="modal-footer" >
 		        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="frmGiaoVien.$invalid" ng-click="save(state,giaovien.gv_ma)">Lưu</button>
 		      	</div>
-			</form>
-	      	
-	    </div>
+			</form>  	
+    	</div>
 	  </div>
 	</div>
 </div>

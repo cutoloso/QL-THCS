@@ -8,7 +8,7 @@ class GopYGVPHController extends Controller
 {
     public function index()
     {
-    	# code...
+    	return "ok gv-ph";
     }
 
     public function create()

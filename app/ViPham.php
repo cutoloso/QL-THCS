@@ -11,6 +11,6 @@ class ViPham extends Model
     protected $fillable = ['hs_ma','vp_ngay','vp_noiDung'];
     protected $primaryKey = ['hs_ma','vp_ngay'];
     protected $date = ['vp_ngay'];
-    protected $dateFormat = 'Y-m-d';
+    protected $dateFormat = 'Y/m/d';
     public $incrementing = false;
 }

@@ -15,7 +15,7 @@ class CreateTocmTable extends Migration
     {
         Schema::create('ToCM', function (Blueprint $table) {
 
-            $table->char('cm_ma',8)->comment('Mã tổ chuyên môn');
+            $table->char('cm_ma',3)->comment('Mã tổ chuyên môn');
 
             $table->string('cm_moTa',100)->comment('Tên chuyên môn');
 

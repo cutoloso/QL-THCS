@@ -11,6 +11,12 @@ class ChuDe_GV_HSTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+    	// $faker = Faker\Factory::create('vi_VN');
+        $limit = 20;
+        for ($i=0; $i < $limit; $i++) {
+        	DB::table('ChuDe_GV_HS')->insert([
+        		'cd_gvhs_ten'=>'Chủ đề '.$i
+        	]); 
+        }
     }
 }

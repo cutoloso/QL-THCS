@@ -14,10 +14,10 @@ class CreateLopTable extends Migration
     public function up()
     {
         Schema::create('Lop', function (Blueprint $table) {
-            $table->char('l_ma',8)->comment('Mã lớp');
+            $table->char('l_ma',3)->comment('Mã lớp');
             $table->string('kh_khoaHoc')->comment('Niên khóa');
             $table->string('p_ma',3)->comment('Mã phòng');
-            $table->string('gv_ma',8)->comment('Mã giáo viên chủ nhiệm');
+            $table->char('gv_ma',8)->comment('Mã giáo viên chủ nhiệm');
         // khóa
             $table->primary(['l_ma','kh_khoaHoc']);
             

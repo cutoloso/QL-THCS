@@ -8,7 +8,7 @@ class GopYGVHSController extends Controller
 {
     public function index()
     {
-    	# code...
+    	return "ok gv-hs";
     }
 
     public function create()

@@ -12,6 +12,6 @@ class PhuHuynh extends Model
     protected $primaryKey = ['ph_ma'];
     protected $hidden = ['ph_matKhau'];
     protected $date = 'ph_ngaySinh';
-    protected $dateFormat = 'Y-m-d';
+    protected $dateFormat = 'Y/m/d ';
     public $incrementing = false;
 }

@@ -11,6 +11,6 @@ class GopY_GV_HS extends Model
     protected $fillable = ['cd_gvhs_ma','gy_gvhs_tGian','gy_gvhs_noiDung'];
     protected $primaryKey = ['gy_gvhs_tGian','cd_gvhs_ma'];
     protected $date = ['gy_gvhs_tGian'];
-    protected $dateFormat = 'Y-m-d';
+    protected $dateFormat = 'Y/m/d ';
     public $incrementing = false;
 }

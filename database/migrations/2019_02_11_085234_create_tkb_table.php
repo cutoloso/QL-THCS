@@ -14,11 +14,11 @@ class CreateTkbTable extends Migration
     public function up()
     {
         Schema::create('TKB', function (Blueprint $table) {
-            $table->char('mh_ma',8)->comment('Mã môn học');
+            $table->char('mh_ma',3)->comment('Mã môn học');
             $table->unsignedTinyInteger('th_stt')->comment('Số thứ tự tiết học');
             $table->string('th_buoi')->comment('Buổi học (Sáng - Chiều) của tiết học');
             $table->string('t_thu')->comment('Thứ trong một tuần');
-            $table->char('l_ma',8)->comment('Mã lớp');
+            $table->char('l_ma',3)->comment('Mã lớp');
             $table->string('hk_hocKy')->comment('Học kỳ trong năm học');
             $table->string('hk_namHoc')->comment('Năm học');
             // khóa

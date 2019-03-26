@@ -5,22 +5,45 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GiaoVien;
 use DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class GiaoVienController extends Controller
 {
   public function index()
   {
-    try {
-      $ds_GiaoVien = DB::table('GiaoVien')->get();
-      return response([
-        'error'=>false,
-        'message'=> compact('ds_GiaoVien')],200);
-    } 
-    catch (Exception $e) {
-      return response([
-        'error'=>true,
-        'message'=> $e->getMessage()],200);
-    }
+
+    // try {
+    //   $ds_GiaoVien = DB::table('GiaoVien')->get();
+    //   return response([
+    //     'error'=>false,
+    //     'message'=> compact('ds_GiaoVien')],200);
+    // } 
+    // catch (Exception $e) {
+    //   return response([
+    //     'error'=>true,
+    //     'message'=> $e->getMessage()],200);
+    // }
+    $user = Auth::user();
+     
+    // load post
+    $gv = GiaoVien::all();
+     
+    // if ($user->can('view',GiaoVien::class)) {
+      try {
+        $ds_GiaoVien = DB::table('GiaoVien')->get();
+        return response([
+          'error'=>false,
+          'message'=> compact('ds_GiaoVien')],200);
+      } 
+      catch (Exception $e) {
+        return response([
+          'error'=>true,
+          'message'=> $e->getMessage()],200);
+      }
+    // } else {
+    //   echo 'Not Authorized.';
+    // }
   }
 
   public function store(Request $req)
@@ -51,7 +74,7 @@ class GiaoVienController extends Controller
     try {
       $gv = DB::table('GiaoVien')->where('gv_ma',$id)->first();
       return response(['error'=>$gv == null,
-                      'message'=>$gv == null ? "Không tìm thấy gíao viên có mã [{$id}]" : compact('gv',$gv)], 200);
+                      'message'=>compact('gv',$gv)], 200);
     }
     catch (Exception $e) {
       return response([

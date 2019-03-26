@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(ToCMTableSeeder::class);
         $this->call(TietHocTableSeeder::class);
         $this->call(PhongTableSeeder::class);
@@ -19,9 +19,12 @@ class DatabaseSeeder extends Seeder
         $this->call(KhoaHocTableSeeder::class);
         $this->call(MonHocTableSeeder::class);
         $this->call(HocKyTableSeeder::class);
-        $this->call(QuyenTableSeeder::class);
-        $this->call(GiaoVienTableSeeder::class);
         $this->call(QuanTriTableSeeder::class);
-
+        $this->call(GiaoVienTableSeeder::class);
+        $this->call(LopTableSeeder::class);
+        $this->call(PhuHuynhTableSeeder::class);
+        $this->call(HocSinhTableSeeder::class);
+        // $this->call(ChuDe_GV_PHTableSeeder::class);
+        // $this->call(ChuDe_GV_HSTableSeeder::class);
     }
 }

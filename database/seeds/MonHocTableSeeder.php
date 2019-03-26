@@ -11,15 +11,25 @@ class MonHocTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('MonHoc')->insert([
-        	['mh_ma'=>'T6','mh_ten'=>'Toán 6'],
-        	['mh_ma'=>'T7','mh_ten'=>'Toán 7'],
-        	['mh_ma'=>'VL6','mh_ten'=>'Lý 6'],
-        	['mh_ma'=>'HH6','mh_ten'=>'Hóa 6'],
-        	['mh_ma'=>'SH6','mh_ten'=>'Sinh 6'],
-        	['mh_ma'=>'NV6','mh_ten'=>'Văn 6'],
-        	['mh_ma'=>'LS6','mh_ten'=>'Sử 6'],
-        	['mh_ma'=>'DL6','mh_ten'=>'Địa 6']
-        ]);
+    	for ($i=6; $i <= 9; $i++) { 
+    		DB::table('MonHoc')->insert([
+    			['mh_ma'=>'T'.$i,'mh_ten'=>'Toán lớp '.$i],
+    			['mh_ma'=>'VL'.$i,'mh_ten'=>'Lý lớp '.$i],
+    			['mh_ma'=>'SH'.$i,'mh_ten'=>'Sinh lớp '.$i],
+    			['mh_ma'=>'CN'.$i,'mh_ten'=>'Công nghệ lớp '.$i],
+    			['mh_ma'=>'NV'.$i,'mh_ten'=>'Văn lớp '.$i],
+    			['mh_ma'=>'LS'.$i,'mh_ten'=>'Sử lớp '.$i],
+    			['mh_ma'=>'DL'.$i,'mh_ten'=>'Địa lớp '.$i],
+    			['mh_ma'=>'CD'.$i,'mh_ten'=>'Giáo dục công dân lớp '.$i],
+    			['mh_ma'=>'NN'.$i,'mh_ten'=>'Ngoại ngữ (Anh, Pháp, Nga, Trung, Nhật) lớp '.$i],
+    			['mh_ma'=>'TD'.$i,'mh_ten'=>'Thể dục lớp '.$i],
+    			['mh_ma'=>'AN'.$i,'mh_ten'=>'Âm nhạc lớp '.$i],
+    			['mh_ma'=>'MT'.$i,'mh_ten'=>'Mỹ thuật lớp '.$i],
+    			['mh_ma'=>'TH'.$i,'mh_ten'=>'Tin học lớp '.$i],
+    		]);
+    		if ($i>=8) {
+    			DB::table('MonHoc')->insert(['mh_ma'=>'HH'.$i,'mh_ten'=>'Hóa lớp '.$i]);
+    		}
+    	}
     }
-}
+  }
