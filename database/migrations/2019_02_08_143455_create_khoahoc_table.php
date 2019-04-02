@@ -14,7 +14,7 @@ class CreateKhoahocTable extends Migration
     public function up()
     {
         Schema::create('KhoaHoc', function (Blueprint $table) {
-            $table->string('kh_khoaHoc')->comment('Niên khóa');
+            $table->char('kh_khoaHoc',4)->comment('Niên khóa');
             // $table->timestamp('kh_taoMoi')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Thời điểm tạo mới');
 
             // $table->timestamp('kh_capnhat')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Thời điểm cập nhật gần nhất');

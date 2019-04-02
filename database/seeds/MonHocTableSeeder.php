@@ -31,5 +31,9 @@ class MonHocTableSeeder extends Seeder
     			DB::table('MonHoc')->insert(['mh_ma'=>'HH'.$i,'mh_ten'=>'Hóa lớp '.$i]);
     		}
     	}
+
+        DB::table('MonHoc')->insert(['mh_ma'=>'CC','mh_ten'=>'Chào cờ']);
+        DB::table('MonHoc')->insert(['mh_ma'=>'SHL','mh_ten'=>'Sinh Hoạt lớp']);
+        DB::table('MonHoc')->insert(['mh_ma'=>'HDNGLL','mh_ten'=>'Hoạt động ngoài giờ lên lớp']);
     }
   }

@@ -14,12 +14,13 @@ class CreateThuTable extends Migration
     public function up()
     {
         Schema::create('Thu', function (Blueprint $table) {
-            $table->string('t_thu')->comment('Thứ trong một tuần');
+            $table->string('t_ma')->comment('Mã thứ');
+            $table->string('t_moTa')->comment('Thứ trong một tuần');
             // $table->timestamp('t_taoMoi')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Thời điểm tạo mới');
 
             // $table->timestamp('t_capnhat')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Thời điểm cập nhật gần nhất');
         // khóa
-            $table->primary(['t_thu']);
+            $table->primary(['t_ma']);
         });
     }
 

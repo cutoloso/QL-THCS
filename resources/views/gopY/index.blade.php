@@ -41,10 +41,11 @@
 			<p class="text-right"><a href="http://localhost/QL-THCS/public/quan-tri/gop-y/gvhs/<% cd.cd_gvph_ma %>">Trả lời <i class="fas fa-angle-double-right"></i></a></p>
 		</div>
 	@elseif(Auth::user()->level == 4)
-		<div class="col-md-10 offset-1 article" ng-repeat="cd in ds_chuDe_GVHS">
-			<p class="text-right"> <% cd.hs_ma%> - <% cd.gv_ma%> </p>
-			<h3> <% cd.cd_gvhs_ten  %> </h3>
-			<p class="text-right"><a href="http://localhost/QL-THCS/public/quan-tri/gop-y/gvhs/<% cd.cd_gvhs_ma %>">Trả lời <i class="fas fa-angle-double-right"></i></a></p>
+		<div class="col-md-10 offset-1 article" ng-repeat="cd_gvhs in ds_chuDe_GVHS">
+			<hr>
+			<p class="text-right"> <% cd_gvhs.gv_ma%> - <% cd_gvhs.hs_ma%> </p>
+			<h5> <% cd_gvhs.cd_gvhs_ten  %> </h5>
+			<p class="text-right"><a href="http://localhost/QL-THCS/public/quan-tri/gop-y/gvhs/<% cd_gvhs.cd_gvhs_ma %>">Trả lời <i class="fas fa-angle-double-right"></i></a></p>
 		</div>
 	@endif
 

@@ -14,21 +14,22 @@ class CreateTkbTable extends Migration
     public function up()
     {
         Schema::create('TKB', function (Blueprint $table) {
-            $table->char('mh_ma',3)->comment('Mã môn học');
             $table->unsignedTinyInteger('th_stt')->comment('Số thứ tự tiết học');
             $table->string('th_buoi')->comment('Buổi học (Sáng - Chiều) của tiết học');
-            $table->string('t_thu')->comment('Thứ trong một tuần');
+            $table->string('t_ma')->comment('Mã thứ');
             $table->char('l_ma',3)->comment('Mã lớp');
+            $table->char('mh_ma',6)->comment('Mã môn học');
+            $table->char('gv_ma',8)->comment('Mã giáo viên');
+            $table->char('kh_khoaHoc',4)->comment('Niên khóa');
             $table->string('hk_hocKy')->comment('Học kỳ trong năm học');
             $table->string('hk_namHoc')->comment('Năm học');
+            $table->string('tkb_moTa')->comment('Mô tả thời khóa biểu')->nullable();
             // khóa
-            $table->primary(['mh_ma','th_stt','th_buoi','t_thu','l_ma','hk_hocKy','hk_namHoc']);
-            
-            $table->foreign('mh_ma')->references('mh_ma')->on('MonHoc')->onDelete('cascade')->onUpdate('cascade');
+            $table->primary(['th_stt','th_buoi','t_ma','l_ma','mh_ma','gv_ma','kh_khoaHoc','hk_hocKy','hk_namHoc'],'tkb_primaryKey');
+
+            $table->foreign(['mh_ma','l_ma','kh_khoaHoc','gv_ma'])->references(['mh_ma','l_ma','kh_khoaHoc','gv_ma'])->on('Day')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign(['th_stt','th_buoi'])->references(['th_stt','th_buoi'])->on('TietHoc')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('t_thu')->references('t_thu')->on('Thu')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('l_ma')->references('l_ma')->on('Lop')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('hk_hocKy')->references('hk_hocKy')->on('HocKy')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('t_ma')->references('t_ma')->on('Thu')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign(['hk_hocKy','hk_namHoc'])->references(['hk_hocKy','hk_namHoc'])->on('HocKy')->onDelete('cascade')->onUpdate('cascade');
         });
     }

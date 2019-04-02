@@ -33,7 +33,7 @@
 		  <tr ng-repeat="kh in ds_kh | orderBy : sortExpression: sortReverse">
 		    <td><% kh.kh_khoaHoc %></td>
 		    <td class="text-center">
-		    	<a href="" ng-click="modal('edit',kh.kh_khoaHoc)" ><i class="fa fa-cog"></i></a>
+		    	<a href="" ng-click="modal('edit',kh.kh_khoaHoc)" ><i class="fas fa-edit"></i></a>
 		    </td>
 		    <td class="text-center">
 		    	<a href="" ng-click="confirmDelete(kh.kh_khoaHoc)"><i class="fa fa-minus" ></i></a>

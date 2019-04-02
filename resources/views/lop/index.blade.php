@@ -21,16 +21,17 @@
 @section('body.title','Danh sách lớp học')
 @section('body.content')
 <div ng-controller="LopController" style="width: 100%;">
-	<div class="form-group">
+{{-- 	<div class="form-group">
 		<label for="kh_khoaHoc">Khóa hoc: </label>
 		<select name="kh_khoaHoc" id="kh_khoaHoc" ng-model="lop.kh_khoaHoc" ng-change="reLoadPage()">
  			<option ng-repeat="kh in ds_kh" ng-value="kh.kh_khoaHoc" value="<% kh.kh_khoaHoc %>"><% kh.kh_khoaHoc %></option>
  		</select>
 	</div>
-
+ --}}
 	<div class="form-group">
 		<label for="khoi">Khối : </label>
-		<select name="khoi" id="khoi" ng-model="lop.khoi" ng-change="reLoadPage()" ng->
+		<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()" ng->
+			<option value="">--Vui lòng chọn--</option>
  			<option value="6">6</option>
  			<option value="7">7</option>
  			<option value="8">8</option>
@@ -46,7 +47,7 @@
 		    <th>Mã phòng học</th>
 		    <th>Mã gíao viên chủ nhiệm</th>
 		    <th colspan="2" class="text-center">
-		    	<a href=""  ng-click="modal('add')" ><i class="fas fa-user-plus" ></i></a>
+		    	<a href=""  ng-click="modal('add')" ><i class="fas fa-plus"></i></a>
 		    </th>
 		  </tr>
 		  <tr ng-repeat="l in ds_lop | orderBy : sortExpression: sorteverse">
@@ -55,10 +56,10 @@
 		    <td><% l.p_ma %></td>
 		    <td><% l.gv_ma %></td>
 		    <td class="text-center">
-		    	<a href="" ng-click="modal('edit',hs.l_ma)" ><i class="fas fa-user-edit"></i></a>
+		    	<a href="" ng-click="modal('edit', l.l_ma, l.kh_khoaHoc, l.p_ma, l.gv_ma)" ><i class="fas fa-edit"></i></a>
 		    </td>
 		    <td class="text-center">
-		    	<a href=""><i class="fas fa-user-minus" ng-click="confirmDelete(lop.l_ma)"></i></a>
+		    	<a href=""><i class="fa fa-minus" ng-click="confirmDelete(l.l_ma)"></i></a>
 		    </td> 
 		  </tr>
 		</table>
@@ -86,7 +87,7 @@
 		         	</div>
 		         	<div class="form-group">
 		         		<label for="kh_khoaHoc">Khóa học:</label>
-		         		<input type="text" class="form-control" id="kh_khoaHoc" name="kh_khoaHoc" placeholder="" ng-model="lop.kh_khoaHoc" readonly required="true" ng-maxlength="10" autofocus>
+		         		<input type="text" class="form-control" id="kh_khoaHoc" name="kh_khoaHoc" placeholder="" ng-model="lop.kh_khoaHoc" ng-readonly="true" required="true" ng-maxlength="10">
 		         	</div>
 					<div class="form-group">
 		         		<label for="p_ma">Mã phòng học:</label>

@@ -14,7 +14,7 @@ class CreateMonhocTable extends Migration
     public function up()
     {
         Schema::create('MonHoc', function (Blueprint $table) {
-            $table->char('mh_ma',3)->comment('Mã môn học');
+            $table->char('mh_ma',6)->comment('Mã môn học');
             $table->string('mh_ten',100)->comment('Tên môn học');
             // $table->timestamp('mh_taoMoi')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Thời điểm tạo mới');
 

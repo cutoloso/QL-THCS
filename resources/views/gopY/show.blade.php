@@ -69,6 +69,7 @@
 @endsection
 @section('body.content')
   <div class="col-10 offset-1" ng-controller="GopYController" ng-init="cd_ma='{{Auth::user()}}'">
+    {{-- giáo viên - hoc sinh --}}
       <div ng-if="compare(loai_gy,'gvhs')" ng-repeat="gy in ds_gy">
         <div class="container feedback darker" ng-if="compare(gy.gy_nguoiGY,'{{Auth::user()->name}}')">
               <img src="/w3images/bandmember.jpg" alt="Avatar" class="right">
@@ -85,6 +86,7 @@
               </span>
         </div>
       </div>
+    {{-- giáo viên - phụ huynh --}}
       <div ng-if="compare(loai_gy,'gvph')" ng-repeat="gy in ds_gy">
         <div class="container feedback darker" ng-if="compare(gy.gy_nguoiGY,'{{Auth::user()->name}}')">
               <img src="/w3images/bandmember.jpg" alt="Avatar" class="right">

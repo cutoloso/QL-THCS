@@ -15,7 +15,7 @@ class CreateLopTable extends Migration
     {
         Schema::create('Lop', function (Blueprint $table) {
             $table->char('l_ma',3)->comment('Mã lớp');
-            $table->string('kh_khoaHoc')->comment('Niên khóa');
+            $table->char('kh_khoaHoc',4)->comment('Niên khóa');
             $table->string('p_ma',3)->comment('Mã phòng');
             $table->char('gv_ma',8)->comment('Mã giáo viên chủ nhiệm');
         // khóa

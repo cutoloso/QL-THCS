@@ -24,23 +24,19 @@ class GiaoVienController extends Controller
     //     'error'=>true,
     //     'message'=> $e->getMessage()],200);
     // }
-    $user = Auth::user();
-     
-    // load post
-    $gv = GiaoVien::all();
-     
+
     // if ($user->can('view',GiaoVien::class)) {
-      try {
-        $ds_GiaoVien = DB::table('GiaoVien')->get();
-        return response([
-          'error'=>false,
-          'message'=> compact('ds_GiaoVien')],200);
-      } 
-      catch (Exception $e) {
-        return response([
-          'error'=>true,
-          'message'=> $e->getMessage()],200);
-      }
+    try {
+      $ds_GiaoVien = DB::table('GiaoVien')->get();
+      return response([
+        'error'=>false,
+        'message'=> compact('ds_GiaoVien')],200);
+    } 
+    catch (Exception $e) {
+      return response([
+        'error'=>true,
+        'message'=> $e->getMessage()],200);
+    }
     // } else {
     //   echo 'Not Authorized.';
     // }
@@ -74,7 +70,7 @@ class GiaoVienController extends Controller
     try {
       $gv = DB::table('GiaoVien')->where('gv_ma',$id)->first();
       return response(['error'=>$gv == null,
-                      'message'=>compact('gv',$gv)], 200);
+        'message'=>compact('gv',$gv)], 200);
     }
     catch (Exception $e) {
       return response([
@@ -112,8 +108,8 @@ class GiaoVienController extends Controller
     try {
       DB::table('GiaoVien')->where('gv_ma','=',$id)->delete();
       return response([
-          'error'=>true,
-          'message'=> "Xóa thành công giáo viên [{$id}]"],200);
+        'error'=>false,
+        'message'=> "Xóa thành công giáo viên [{$id}]"],200);
     }
     catch (Exception $e) {
       return response([
@@ -122,7 +118,19 @@ class GiaoVienController extends Controller
     }
   }
 
+  public function gv_tocm($cm_ma)
+  {
+    try {
+      $ds_gv = DB::table('GiaoVien')->where('cm_ma',$cm_ma)->get();
 
-
-
+      return response([
+        'error'   => false,
+        'message' => compact('ds_gv')],200);
+    }
+    catch (Exception $e) {
+      return response([
+        'error'   => true,
+        'message' => $e->getMessage()],200);
+    }
+  }
 }

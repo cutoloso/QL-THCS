@@ -8,11 +8,9 @@
 		background-color: #4CAF50;
 		color: white;
 	}
-
 	i{
 		color: #333;
 	}
-
 	.form-group span{
 		color: red;
 	}

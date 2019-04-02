@@ -1,22 +1,20 @@
 app.controller('ThongBaoTruongController',function($scope,$http,URL_Main){
 
 	$scope.sub = function(event){
-		event.preventDefault();
-		console.log('sdfdfad');
-				$.ajax({
-				url: URL_Main + 'thong-bao-truong/',
+		if($("#myFile").val() != ""){
+			$.ajax({
+				url: "http://localhost/QL-THCS/public/test",
 				method: "POST",
-				data: new FormData(this),
+				data:new FormData(this),
 				dataType: 'JSON',
 				contentType: false,
 				cache: false,
 				processData: false,
 				success: function(response)
 				{
-					// fillData();
+
+					location.reload();
 					alert("Thêm s?n ph?m thành công");
-              //Xóa du?ng d?n dã thêm vào input
-              $("#tbt_noidung").val('').clone(true);
             },
             error: function(response)
             {
@@ -25,13 +23,18 @@ app.controller('ThongBaoTruongController',function($scope,$http,URL_Main){
             }
 
           });
+		}
+		else
+		{
+
+		}
 	}
 
-	// Add the following code if you want the name of the file appear on select
-	$(".custom-file-input").on("change", function() {
-	  var fileName = $(this).val().split("\\").pop();
-	  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-	});
+	// // Add the following code if you want the name of the file appear on select
+	// $(".custom-file-input").on("change", function() {
+	//   var fileName = $(this).val().split("\\").pop();
+	//   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	// });
 
 	
 	function fillData() {
@@ -41,20 +44,19 @@ app.controller('ThongBaoTruongController',function($scope,$http,URL_Main){
 	}
 	fillData();
 	
-	$scope.confirmDelete = function(tbt_ma) {
-		if(confirm('Bạn có chắc muốn xóa không ?')){
-			$http.delete(URL_Main + 'thong-bao-truong/' + tbt_ma).
-				then(function (response) {
-					fillData();
-					console.log('seed'+tbt_ma);
-				},function (error) {
-					console.log(error);
-				});
-		}
-	}
+	// $scope.confirmDelete = function(tbt_ma) {
+	// 	if(confirm('Bạn có chắc muốn xóa không ?')){
+	// 		$http.delete(URL_Main + 'thong-bao-truong/' + tbt_ma).
+	// 			then(function (response) {
+	// 				fillData();
+	// 				console.log('seed'+tbt_ma);
+	// 			},function (error) {
+	// 				console.log(error);
+	// 			});
+	// 	}
+	// }
 	$scope.modal = function(state,tbt_ma){
 		$scope.state  = state;
-		
 		switch(state){
 			case "add":
 				$scope.frmTitle = "Thêm thông báo";
@@ -70,9 +72,8 @@ app.controller('ThongBaoTruongController',function($scope,$http,URL_Main){
 					var ngayKT = response.data.message.thongBaoTruong.tbt_ngayKT.toString();
 					$scope.thongbao.tbt_ngayKT = new Date(ngayKT);
 				});
-
 				break;
-		}
+			}
 		// Hiện form
 		$('#myModal').modal('show');
 	}

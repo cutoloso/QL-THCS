@@ -21,7 +21,7 @@
 @section('body.title','Danh sách học sinh theo lớp')
 @section('body.content')
 <div ng-controller="HocSinhController" style="width: 100%;">
-	{{-- <div class="form-group">
+	<div class="form-group">
 		<label for="khoi">Khối : </label>
 		<select name="khoi" id="khoi" ng-model="hocsinh.khoi" ng-change="reLoadPage()" ng->
 			<option value="">---Vui lòng chọn--</option>
@@ -30,14 +30,14 @@
  			<option value="8">8</option>
  			<option value="9">9</option>
  		</select>
-	</div> --}}
-	<div class="form-group">
+	</div>
+{{-- 	<div class="form-group">
 		<label for="kh_khoaHoc">Khóa hoc: </label>
 		<select name="kh_khoaHoc" id="kh_khoaHoc" ng-model="hocsinh.kh_khoaHoc" ng-change="reLoadPage()">
-			{{-- <option value="">---Vui lòng chọn--</option> --}}
+			<option value="">---Vui lòng chọn--</option>
  			<option ng-repeat="kh in ds_kh" ng-value="kh.kh_khoaHoc" value="<% kh.kh_khoaHoc %>"><% kh.kh_khoaHoc %></option>
  		</select>
-	</div>
+	</div> --}}
 	{{-- <select ng-model="hocsinh.kh_khoaHoc" ng-options="kh.kh_khoaHoc for kh in ds_kh" ng-change="reLoadPage()">
       </select> --}}
 	<div class="form-group">
@@ -66,9 +66,7 @@
 		    </th>
 		  </tr>
 		  <tr ng-repeat="hs in ds_hs | orderBy : sortExpression: sortReverse">
-		    <td>
-		    	<% now-hs.kh_khoaHoc < 3 ? (now-hs.kh_khoaHoc+6):'9' %> <%hs.l_ma%>
-		    </td>
+		    <td><%hocsinh.khoi%><%hs.l_ma%></td>
 		    <td><% hs.hs_ma %></td>
 		    <td><% hs.hs_hoTen %></td>
 		    <td  ng-bind="hs.hs_ngaySinh | date: 'dd/MM/yyyy'"></td>

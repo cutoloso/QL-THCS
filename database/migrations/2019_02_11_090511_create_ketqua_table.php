@@ -17,7 +17,7 @@ class CreateKetquaTable extends Migration
             $table->char('hs_ma',8)->comment('Mã học sinh');
             $table->string('hk_hocKy')->comment('Học kỳ trong năm học');
             $table->string('hk_namHoc')->comment('Năm học');
-            $table->char('mh_ma',3)->comment('Mã môn học');
+            $table->char('mh_ma',6)->comment('Mã môn học');
             $table->unsignedTinyInteger('kq_lan')->default(1)->comment('Kết quả lần');
             $table->float('kq_Diem',2,2)->comment('Diểm số');
 

@@ -53,8 +53,9 @@ class HocSinhController extends Controller
   {
     try {
       $hs = DB::table('HocSinh')->where('hs_ma',$id)->first();
-      return response(['error'=>$hs == null,
-                      'message'=>$hs == null ? "Không tìm thấy học sinh có mã [{$id}]" : compact('hs',$hs)], 200);
+      return 
+        response(['error'=>$hs == null,
+                  'message'=>$hs == null ? "Không tìm thấy học sinh có mã [{$id}]" : compact('hs',$hs)], 200);
     }
     catch (Exception $e) {
       return response([

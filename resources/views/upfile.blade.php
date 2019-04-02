@@ -6,8 +6,8 @@
     <div ng-controller="UpFileController" style="width: 100%;">
     	<form ng-submit="sub()" action="" name="frmUpFile" enctype="multipart/form-data" method="POST">
     		@csrf
-      	<input type="file" name="myFile" id="myFile">
-      	<button type="submit">submit</button>
+	      	<input type="file" name="myFile" id="myFile">
+	      	<button type="submit">submit</button>
         </form>
     </div>
 @endsection

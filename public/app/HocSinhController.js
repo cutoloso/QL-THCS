@@ -1,29 +1,39 @@
 app.controller('HocSinhController',function($scope,$http,URL_Main){
-	// $scope.khoi = '6';
 
-	$scope.maKhoaHoc = '2015';
-	// $scope.maLop = '9A';
+	// $scope.hocsinh = {
+	// 	'l_ma':'',
+	// 	'kh_khoaHoc': ''
+	// };
 
-	$scope.hocsinh = {
-		'l_ma':'',
-		'kh_khoaHoc': ''
-	};
-
-	function fillKhoaHoc() {
-		$http.get(URL_Main + 'khoa-hoc/').then(function(response){
-			$scope.ds_kh = response.data.message.ds_KhoaHoc;
-			$scope.hocsinh.kh_khoaHoc = $scope.ds_kh[0].kh_khoaHoc;
-		});
-	}
-	fillKhoaHoc();
-
+	// function fillKhoaHoc() {
+	// 	$http.get(URL_Main + 'khoa-hoc/').then(function(response){
+	// 		$scope.ds_kh = response.data.message.ds_KhoaHoc;
+	// 		// $scope.hocsinh.kh_khoaHoc = $scope.ds_kh[0].kh_khoaHoc;
+	// 	});
+	// }
+	// fillKhoaHoc();
+	var d = new Date();
+	var yearNow = d.getFullYear();
 	function fillLop() {
+		switch ($scope.hocsinh.khoi) {
+			case '9':
+			$scope.maKhoaHoc = yearNow-3;
+			break;
+			case '8':
+			$scope.maKhoaHoc = yearNow-2;
+			break;
+			case '7':
+			$scope.maKhoaHoc = yearNow-1;
+			break;
+			case '6':
+			$scope.maKhoaHoc = yearNow;
+			break;
+		}
 		$http.get(URL_Main + 'lop/'+ $scope.maKhoaHoc +'/khoa-hoc').then(function(response){
 			$scope.ds_lop = response.data.message.ds_Lop;
-			// $scope.hocsinh.l_ma = $scope.ds_lop[0].l_ma;
 		});
 	}
-	fillLop();
+	// fillLop();
 	
 	function fillData() {
 
@@ -32,9 +42,9 @@ app.controller('HocSinhController',function($scope,$http,URL_Main){
 		});
 	}
 
-	fillData();
-	var d = new Date();
-	$scope.now = d.getFullYear();
+	// fillData();
+	// var d = new Date();
+	// $scope.now = d.getFullYear();
 	// $scope.Lop = function(hs_ma) {
 	// 	var hs = {};
 	// 	var kh;
@@ -49,13 +59,19 @@ app.controller('HocSinhController',function($scope,$http,URL_Main){
 	// 	}
 	// 	return '9'+hs.hs_ma;
 	// }
+
 // cập nhật lại bảng sinh viên
 $scope.reLoadPage = function() {
-	$scope.maKhoaHoc = $scope.hocsinh.kh_khoaHoc;
-	fillLop();
-	$scope.maLop = $scope.hocsinh.l_ma;
-	fillData();
+	if (typeof $scope.hocsinh.khoi != "undefined") {
+		fillLop();
+		if (typeof $scope.hocsinh.l_ma != "undefined") {
+			$scope.maLop = $scope.hocsinh.l_ma;
+				fillData();
+				console.log('kh: '+$scope.maKhoaHoc+' lop:'+ $scope.maLop)
+		}
+	}
 }
+
 // Sắp xếp mã tăng dần hoặc giảm dần
 $scope.sortExpression = 'hs_ma';
 $scope.sortReverse = false;

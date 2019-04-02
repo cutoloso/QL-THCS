@@ -12,7 +12,10 @@ class ThuTableSeeder extends Seeder
     public function run()
     {
     	for ($i = 2; $i <= 7; $i++) {
-        	DB::table('Thu')->insert(['t_thu'=>"Thứ ".$i]);
+        	DB::table('Thu')->insert([
+                't_ma'=>"T".$i,
+                't_moTa'=>"Thứ ".$i,
+            ]);
     	}
     }
 }

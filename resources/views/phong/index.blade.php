@@ -52,7 +52,7 @@
 		    <td><% p.p_sucChua %></td>
 		    <td><% p.p_ghiChu %></td>
 		    <td class="text-center">
-		    	<a href="" ng-click="modal('edit',p.p_ma)" ><i class="fa fa-cog"></i></a>
+		    	<a href="" ng-click="modal('edit',p.p_ma)" ><i class="fas fa-edit"></i></a>
 		    </td>
 		    <td class="text-center">
 		    	<a href="" ng-click="confirmDelete(p.p_ma)"><i class="fa fa-minus" ></i></a>

@@ -18,19 +18,22 @@
 	}
 </style>
 @endsection
-@section('body.title','Danh sách học sinh theo lớp')
+@section('body.title','Danh sách dạy học')
 @section('body.content')
-<div ng-controller="HocSinhController" style="width: 100%;">
+<div ng-controller="DayController" style="width: 100%;">
 	<div class="form-group">
-		<label for="kh_khoaHoc">Khóa hoc: </label>
-		<select name="kh_khoaHoc" id="kh_khoaHoc" ng-model="hocsinh.kh_khoaHoc" ng-change="reLoadPage()">
-			{{-- <option value="">---Vui lòng chọn--</option> --}}
- 			<option ng-repeat="kh in ds_kh" ng-value="kh.kh_khoaHoc" value="<% kh.kh_khoaHoc %>"><% kh.kh_khoaHoc %></option>
+		<label for="khoi">Khối : </label>
+		<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()" ng->
+			<option value="">---Vui lòng chọn--</option>
+ 			<option value="6">6</option>
+ 			<option value="7">7</option>
+ 			<option value="8">8</option>
+ 			<option value="9">9</option>
  		</select>
 	</div>
 	<div class="form-group">
-		<label for="l_ma">Lớp: </label>
-		<select name="l_ma" id="l_ma" ng-model="hocsinh.l_ma" ng-change="reLoadPage()">
+		<label for="l_ma">Lớp : </label>
+		<select name="l_ma" id="l_ma" ng-model="l_ma" ng-change="reLoadPage()">
 			<option value="">---Vui lòng chọn--</option>
  			<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
  		</select>
@@ -39,34 +42,22 @@
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 		  <tr>
-		    <th>Lớp</th>
-		    <th ng-click="sort()" style="cursor: pointer;">Mã <i class="fa fa-caret-<% sortReverse? 'up':'down' %>"></i></th>
-		    <th>Môn học</th>
-		    <th>Tên giáo viên</th>
+		    <th>STT</th>
+		    <th ng-click="sort()" style="cursor: pointer;">Môn học  <i class="fa fa-caret-<% sorteverse? 'up':'down' %>"> </i></th>
+		    <th>Mã - Họ tên giáo viên</th>
 		    <th colspan="2" class="text-center">
-		    	<a href=""  ng-click="modal('add')" ><i class="fas fa-user-plus" ></i></a>
+		    	<a href="" ng-show="add" ng-click="modal('add')" ><i class="fas fa-plus"></i></i></a>
 		    </th>
 		  </tr>
-		  <tr ng-repeat="hs in ds_hs | orderBy : sortExpression: sortReverse">
-		    <td>
-		    	<% now-hs.kh_khoaHoc < 3 ? (now-hs.kh_khoaHoc+6):'9' %> <%hs.l_ma%>
-		    </td>
-		    <td><% hs.hs_ma %></td>
-		    <td><% hs.hs_hoTen %></td>
-		    <td  ng-bind="hs.hs_ngaySinh | date: 'dd/MM/yyyy'"></td>
-			<td><% hs.hs_phai > 0 ? 'Nam':'Nữ' %></td>
-		    <td><% hs.hs_diaChi %></td>
-		    <td><% hs.ph_ma %></td>
+		  <tr ng-repeat="d in ds_d | orderBy : sortExpression: sortReverse">
+		    <td><% $index+1 %></td>
+		    <td><% d.mh_ten %></td>
+		    <td><% d.gv_ma %> - <% d.gv_hoTen %></td>
 		    <td class="text-center">
-		    	@if(Auth::user()->status == 0) <i class="fas fa-check"></i>
-		    	@else <i class="fas fa-times"></i>
-		    	@endif
+		    	<a href="" ng-click="modal('edit', d.cm_ma, d.gv_ma)" ><i class="fas fa-edit"></i></a>
 		    </td>
 		    <td class="text-center">
-		    	<a href="" ng-click="modal('edit',hs.hs_ma)" ><i class="fas fa-user-edit"></i></a>
-		    </td>
-		    <td class="text-center">
-		    	<a href=""><i class="fas fa-user-minus" ng-click="confirmDelete(hs.hs_ma)"></i></a>
+		    	<a href="" ng-click="confirmDelete(d.mh_ma,d.gv_ma)" ><i class="fas fa-minus" ></i></a>
 		    </td> 
 		  </tr>
 		</table>
@@ -82,58 +73,34 @@
 	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 	      	</div>
 
-	      	<form action="" name="frmHocSinh">
+	      	<form action="" name="frmDay">
+	      		@csrf
 	      	<!-- Modal body -->
 	      		<div class="modal-body">
+		         	<div class="form-group">
+		         		<label for="cm_ma">Mã môn học:</label>
+		         		<select class="custom-select" name="cm_ma" id="cm_ma" ng-model="day.cm_ma" ng-change="loadGiaoVien()" ng-disabled="readOnly" required="true">
+		         			<option value="">---Vui lòng chọn---</option>
+		         			<option ng-repeat="cm in ds_cm" ng-value="cm.cm_ma" value="<% cm.cm_ma %>"><% cm.cm_ma %> - <% cm.cm_moTa %></option>
+		         		</select>
+		         		<span class="text-danger" ng-show="frmDay.cm_ma.$error.required">Bạn chưa chọn môn học</span>
+		         	</div>
 
 		         	<div class="form-group">
-		         		<label for="hs_ma">Mã:</label>
-		         		<input type="text" class="form-control" id="hs_ma" name="hs_ma" placeholder="" ng-model="hocsinh.hs_ma" ng-readonly="readOnly" required="true" ng-maxlength="10" autofocus>
-		         		<span class="text-danger" ng-show="frmHocSinh.hs_ma.$error.required">Bạn chưa nhập mã</span>
-		         		<span class="text-danger" ng-show="frmHocSinh.hs_ma.$error.maxlength">Mã không hợp lệ</span>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="hs_hoTen">Họ tên:</label>
-		         		<input type="text" class="form-control" id="hs_hoTen" name="hs_hoTen" placeholder="" ng-model="hocsinh.hs_hoTen" required="true" ng-maxlength="100">
-		         		<span class="text-danger" ng-show="frmHocSinh.hs_hoTen.$error.required">Bạn chưa nhập họ tên</span>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="hs_ngaySinh">Ngày sinh:</label>
-		         		<input type="date" class="form-control" id="hs_ngaySinh" name="hs_ngaySinh" ng-model="hocsinh.hs_ngaySinh">
-					</div>
-		         	<div class="form-group">
-		         		<label for="hs_phai">Phái:</label><br>
-		         		<input ng-model="hocsinh.hs_phai" type="radio" name="hs_phai" ng-value="1"> Nam
-		         		<input ng-model="hocsinh.hs_phai" type="radio" name="hs_phai" ng-value="0" > Nữ<br>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="hs_diaChi">Địa chỉ:</label>
-		         		<input type="text" class="form-control" id="hs_diaChi"  name="hs_diaChi" placeholder="" ng-model="hocsinh.hs_diaChi" required="true">
-		         		<span class="text-danger" ng-show="frmHocSinh.hs_diaChi.$error.required">Bạn chưa nhập địa chỉ</span>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="ph_ma">Mã phụ huynh:</label>
-		         		<select class="custom-select" name="ph_ma" id="ph_ma" ng-model="hocsinh.ph_ma">
-		         			<option value="">Mã - Họ Tên</option>
-		         			<option ng-repeat="ph in ds_ph" ng-value="ph.ph_ma" value="<% ph.ph_ma %>"><% ph.ph_ma %> - <% ph.ph_hoTen%></option>
+		         		<label for="gv_ma">Mã gíao viên:</label>
+		         		<select class="custom-select" name="gv_ma" id="gv_ma" ng-model="day.gv_ma" required="true">
+		         			<option value="">---Vui lòng chọn---</option>
+		         			<option ng-repeat="gv in ds_gv" ng-value="gv.gv_ma" value="<% gv.gv_ma %>"><% gv.gv_ma %> - <% gv.gv_hoTen%></option>
 		         		</select>
+		         		<span class="text-danger" ng-show="frmDay.cm_ma.$error.required">Bạn chưa chọn giáo viên dạy</span>
 		         	</div>
-		         	<div class="form-group">
-		         		<label for="hs_matKhau">Mật khẩu:</label>
-		         		<input type="password" class="form-control" id="hs_matKhau" name="hs_matKhau" placeholder="" ng-model="hocsinh.hs_matKhau" ng-maxlength="32" ng-blur="compare()">
-		         		<span class="text-danger" ng-show="frmHocSinh.hs_matKhau.$error.maxlength">Mật khẩu không hợp lệ</span>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="hs_matKhau_repeat">Nhập lại mật khẩu:</label>
-		         		<input type="password" class="form-control" id="hs_matKhau_repeat" name="hs_matKhau_repeat" placeholder="" ng-model="hocsinh.hs_matKhau_repeat" ng-maxlength="32" ng-blur="compare()">
-		         		<span class="text-danger" ng-show="passError">Mật khẩu không hợp lệ</span>
-		         	</div>
+		         	
 		        
 	      		</div>
 
 	      		<!-- Modal footer -->
 	      		<div class="modal-footer" >
-		        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="frmHocSinh.$invalid" ng-click="save(state,hocsinh.hs_ma)">Lưu</button>
+		        	<button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="frmDay.$invalid" ng-click="save(state,day.cm_ma)">Lưu</button>
 		      	</div>
 			</form>
 	      	
@@ -144,5 +111,5 @@
 
 @endsection
 @section('body.js')
-	<script type="text/javaScript" src="{{asset('app/HocSinhController.js')}}"></script>
+	<script type="text/javaScript" src="{{asset('app/DayController.js')}}"></script>
 @endsection

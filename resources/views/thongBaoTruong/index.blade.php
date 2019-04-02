@@ -58,16 +58,16 @@
 					<a href="" ng-click="modal('edit',tbt.tbt_ma)" ><i class="fa fa-cog"></i></a>
 				</td> --}}
 				<td class="text-center">
-					<a href="http://localhost/QL-THCS/public/quan-tri/thong-bao-truong/<%tbt.tbt_ma%>/edit" ><i class="fa fa-cog"></i></a>
+					<a href="http://localhost/QL-THCS/public/quan-tri/thong-bao-truong/<%tbt.tbt_ma%>/edit" ><i class="fas fa-edit"></i></a>
 				</td>
 				<td class="text-center">
-					<a href="" ng-click="confirmDelete(tbt.tbt_ma)"><i class="fa fa-minus" ></i></a>
+					<a href="" ng-click="confirmDelete(tbt.tbt_ma)"><i class="fas fa-minus" ></i></a>
 				</td> 
 			</tr>
 		</table>
 	</div>
 
-{{-- 	<!-- The Modal -->
+	<!-- The Modal -->
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -78,10 +78,11 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 
-				<form ng-submit="sub()" name="frmThongBaoTruong" id="frmThongBaoTruong" enctype="multipart/form-data" method="POST">
-					@csrf
+
 					<!-- Modal body -->
 					<div class="modal-body">
+						<form ng-submit="sub()" action="" name="frmThongBaoTruong" enctype="multipart/form-data" method="POST">
+						@csrf
 						<div class="form-group">
 							<label for="tbt_tieuDe">Tiêu đề:</label>
 							<input type="text" class="form-control" id="tbt_tieuDe" name="tbt_tieuDe" autofocus ng-model="thongbao.tbt_tieuDe" required="true">
@@ -101,26 +102,25 @@
 							<input type="file" class="form-control custom-file-input" id="tbt_noidung" name="tbt_noidung" ng-model="thongbao.tbt_noidung" >
 							<label class="custom-file-label" for="customFile">Chọn tệp</label>
 						</div>
+						<input type="file" name="myFile" id="myFile">
+						
+						<button type="submit" class="btn btn-primary" data-dismiss="modal" 
+						ng-disabled="frmThongBaoTruong.$invalid">Lưu</button>
+						
+						</form>
 					</div>
 
 					<!-- Modal footer -->
 					<div class="modal-footer" >
-						<button type="submit" class="btn btn-primary" data-dismiss="modal" ng-disabled="frmThongBaoTruong.$invalid">Lưu</button>
+						
 					</div>
-				</form>
+				
 
 			</div>
 		</div>
-	</div> --}}
+	</div>
 </div>
 @endsection
 @section('body.js')
 <script type="text/javaScript" src="{{asset('app/ThongBaoTruongController.js')}}"></script>
-{{-- <script>
-	$("btn-sub").on("click", function(event){
-		event.preventDefault();
-			alert('ok submit');
-
-	});
-</script> --}}
 @endsection

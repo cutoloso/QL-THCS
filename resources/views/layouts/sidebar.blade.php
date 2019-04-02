@@ -68,7 +68,7 @@
     
     <!-- Nav Item - Dạy Collapse Menu -->
     <li class="nav-item">
-      <a class="nav-link" href="{{route('dsthongbaotruong')}}">
+      <a class="nav-link" href="{{route('dsday')}}">
         <i class="fas fa-graduation-cap"></i>
         <span>Quản lý dạy học</span>
       </a>
@@ -91,8 +91,8 @@
       <div id="TKBCollapse" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Chỉnh sửa Thời khóa biểu</h6>
-          <a class="collapse-item" href="#">Thêm Thời khóa biểu</a>
-          <a class="collapse-item" href="#">Danh Thời khóa biểu</a>
+          <a class="collapse-item" href="{{route('tkb.import')}}">Cập nhật thời khóa biểu</a>
+          <a class="collapse-item" href="{{route('tkb.view')}}">Xem khóa biểu</a>
         </div>
       </div>
     </li>
