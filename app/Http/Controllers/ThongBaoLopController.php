@@ -17,7 +17,7 @@ class ThongBaoLopController extends Controller
 				'error'=>false,
 				'message'=> compact('ds_thongBaoLop')],200);
 
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -52,10 +52,10 @@ class ThongBaoLopController extends Controller
 				'message'=> "Thêm thành công"],200);
 
 		} 
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
-				'message'=> $e->getMessage()],200);
+				'message'=>"Thêm thất bại"]);
 		}
 
 	}
@@ -67,7 +67,7 @@ class ThongBaoLopController extends Controller
 			return response(['error'=>$thongBaoLop == null,
 				'message'=>compact('thongBaoLop',$thongBaoLop)], 200);
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -96,7 +96,7 @@ class ThongBaoLopController extends Controller
 				'error'=>true,
 				'message'=> "Cập nhật thành công thông báo [{$id}]"],200);
 		} 
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -111,7 +111,7 @@ class ThongBaoLopController extends Controller
 				'error'=>true,
 				'message'=> "Xóa thành công thông báo [{$id}]"],200);
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);

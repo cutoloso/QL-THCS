@@ -16,7 +16,7 @@ class HocSinhController extends Controller
         'error'=>false,
         'message'=> compact('ds_HocSinh')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -28,7 +28,6 @@ class HocSinhController extends Controller
     try {
       DB::table('HocSinh')->insert([
         'hs_ma' => $req->hs_ma,
-        'hs_matKhau' => $req->hs_matKhau,
         'hs_hoTen' => $req->hs_hoTen,
         'hs_ngaySinh' => date('Y-m-d', strtotime($req->hs_ngaySinh)),
         'hs_phai'  =>$req->hs_phai,
@@ -39,10 +38,10 @@ class HocSinhController extends Controller
         'q_ma' => 3
       ]);
       return response([
-        'error'=>false,
-        'message'=> "Thêm thành công"],200);
+        'error'=>true,
+        'message'=>"Thêm thất bại"]);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -57,7 +56,7 @@ class HocSinhController extends Controller
         response(['error'=>$hs == null,
                   'message'=>$hs == null ? "Không tìm thấy học sinh có mã [{$id}]" : compact('hs',$hs)], 200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -69,17 +68,16 @@ class HocSinhController extends Controller
     try {
       DB::table('HocSinh')->where('hs_ma','=',$id)->update([
         'hs_hoTen' => $req->hs_hoTen,
-        'hs_matKhau' => $req->hs_matKhau,
         'hs_ngaySinh' => date('Y-m-d', strtotime($req->hs_ngaySinh)),
         'hs_phai'  =>$req->hs_phai,
         'hs_diaChi' => $req->hs_diaChi,
         'ph_ma' => $req->ph_ma
       ]);
       return response([
-        'error'=>true,
-        'message'=> "Cập nhật thành công giáo viên [{$id}]"],200);
+        'error'=>false,
+        'message'=> "Cập nhật thành công học sinh [{$id}]"],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -94,7 +92,7 @@ class HocSinhController extends Controller
           'error'=>true,
           'message'=> "Xóa thành công học sinh [{$id}]"],200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -121,7 +119,7 @@ class HocSinhController extends Controller
           'error'=>false,
           'message'=> compact('ds_HocSinh')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
           'error'=>true,
           'message'=> $e->getMessage()],200);

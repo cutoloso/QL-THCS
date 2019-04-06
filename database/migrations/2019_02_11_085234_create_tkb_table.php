@@ -23,7 +23,7 @@ class CreateTkbTable extends Migration
             $table->char('kh_khoaHoc',4)->comment('Niên khóa');
             $table->string('hk_hocKy')->comment('Học kỳ trong năm học');
             $table->string('hk_namHoc')->comment('Năm học');
-            $table->string('tkb_moTa')->comment('Mô tả thời khóa biểu')->nullable();
+            
             // khóa
             $table->primary(['th_stt','th_buoi','t_ma','l_ma','mh_ma','gv_ma','kh_khoaHoc','hk_hocKy','hk_namHoc'],'tkb_primaryKey');
 

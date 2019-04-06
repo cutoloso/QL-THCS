@@ -18,7 +18,7 @@ class KhoaHocController extends Controller
         'error'=>false,
         'message'=> compact('ds_KhoaHoc')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -35,10 +35,10 @@ class KhoaHocController extends Controller
         'error'=>false,
         'message'=> "Thêm thành công"],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
-        'message'=> $e->getMessage()],200);
+        'message'=>"Thêm thất bại"]);
     }
   }
 
@@ -49,7 +49,7 @@ class KhoaHocController extends Controller
       return response(['error'=>$khoahoc == null,
                       'message'=>$khoahoc == null ? "Không tìm thấy khóa học [{$id}]" : compact('khoahoc',$khoahoc)], 200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -66,7 +66,7 @@ class KhoaHocController extends Controller
         'error'=>true,
         'message'=> "Cập nhật thành công phòng [{$id}]"],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -81,7 +81,7 @@ class KhoaHocController extends Controller
           'error'=>true,
           'message'=> "Xóa thành công khóa học [{$id}]"],200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);

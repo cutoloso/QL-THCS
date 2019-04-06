@@ -18,7 +18,7 @@ class PhongController extends Controller
         'error'=>false,
         'message'=> compact('ds_Phong')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -37,10 +37,10 @@ class PhongController extends Controller
         'error'=>false,
         'message'=> "Thêm thành công"],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
-        'message'=> $e->getMessage()],200);
+        'message'=>"Thêm thất bại"]);
     }
   }
 
@@ -51,7 +51,7 @@ class PhongController extends Controller
       return response(['error'=>$phong == null,
                       'message'=>$phong == null ? "Không tìm thấy phòng có mã [{$id}]" : compact('phong',$phong)], 200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -69,7 +69,7 @@ class PhongController extends Controller
         'error'=>true,
         'message'=> "Cập nhật thành công phòng [{$id}]"],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -84,7 +84,7 @@ class PhongController extends Controller
           'error'=>true,
           'message'=> "Xóa thành công phòng [{$id}]"],200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);

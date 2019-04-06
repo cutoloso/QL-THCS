@@ -22,23 +22,23 @@ app.controller('TaiKhoanController',function($scope,$http,URL_Main){
 		
 		switch(state){
 			case "add":
-				$scope.frmTitle = "Thêm tài Khoản";
-				$scope.readOnly=false;
-				$scope.taikhoan = {
-					'name':'',
-					'password':'',
-					'level':'',
-					'status':1
-				};
-				break;
+			$scope.frmTitle = "Thêm tài Khoản";
+			$scope.readOnly=false;
+			$scope.taikhoan = {
+				'name':'',
+				'password':'',
+				'level':'',
+				'status':1
+			};
+			break;
 			case "edit":
-				$scope.readOnly=true;
-				$scope.frmTitle = "Sửa tài Khoản";
-				$scope.name = name;
-				$http.get(URL_Main + 'tai-khoan/' + name).then(function(response){
-					$scope.taikhoan = response.data.message.tk;
-				});
-				break;
+			$scope.readOnly=true;
+			$scope.frmTitle = "Sửa tài Khoản";
+			$scope.name = name;
+			$http.get(URL_Main + 'tai-khoan/' + name).then(function(response){
+				$scope.taikhoan = response.data.message.tk;
+			});
+			break;
 		}
 		// Hiện form
 		$('#myModal').modal('show');
@@ -57,43 +57,73 @@ app.controller('TaiKhoanController',function($scope,$http,URL_Main){
 	$scope.save = function(state,name) {
 		switch(state){
 			case "add":
-				var data = $.param($scope.taikhoan);
-				console.log(data);
-				$http({
-				  	method: 'POST',
-				  	url: URL_Main + 'tai-khoan',
-				  	data: data,
-				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-				  	}).then(function(response) {
-						fillData();
-				  	}, function (error) {
-					    console.log(error);
-					  }); 
-					break;
+			var data = $.param($scope.taikhoan);
+			console.log(data);
+			$http({
+				method: 'POST',
+				url: URL_Main + 'tai-khoan',
+				data: data,
+				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+			}).then(function(response) {
+				fillData();
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			}, function (response) {
+				// $scope.alert = {
+				// 	'show': true,
+				// 	'error' : response.data.error,
+				// 	'message' : response.data.message 
+				// };
+				console.log(response);
+			}); 
+			break;
 			case "edit":
-				var data = $.param($scope.taikhoan);
-				$http({
-				  	method: 'PUT',
-				  	url: URL_Main + 'tai-khoan/' + name,
-				  	data: data,
-				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-				  	}).then(function(response) {
-							fillData();
-					  	}, function (error) {
-					    console.log(error);
-					  	}); 
-					break;
+			var data = $.param($scope.taikhoan);
+			$http({
+				method: 'PUT',
+				url: URL_Main + 'tai-khoan/' + name,
+				data: data,
+				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+			}).then(function(response) {
+				fillData();
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			}, function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+				
+			}); 
+			break;
 		}
 	}
 
 	$scope.confirmDelete = function(name) {
 		if(confirm('Bạn có chắc muốn xóa không ?')){
 			$http.delete(URL_Main + 'tai-khoan/' + name).
-				then(function (response) {
-					fillData();
-				},function (error) {
-					console.log(error);
-				});
+			then(function (response) {
+				fillData();
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			},function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+				
+			});
 		}
 	}
 

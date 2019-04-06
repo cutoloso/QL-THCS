@@ -31,11 +31,14 @@ class UserController extends Controller
 				'level' => $req->level,
 				'created_at' => date('Y-m-d', time())
 			]);
+			return response([
+				'error'=>false,
+				'message'=> "Thêm thành công"],200);
 		} 
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
-				'message'=> $e->getMessage()],200);
+				'message'=> "Thêm tài khoản bị lỗi"],200);
 		}
 	}
 

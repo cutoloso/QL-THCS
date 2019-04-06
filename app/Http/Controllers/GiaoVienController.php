@@ -19,7 +19,7 @@ class GiaoVienController extends Controller
     //     'error'=>false,
     //     'message'=> compact('ds_GiaoVien')],200);
     // } 
-    // catch (Exception $e) {
+    // catch (\Exception $e) {
     //   return response([
     //     'error'=>true,
     //     'message'=> $e->getMessage()],200);
@@ -32,7 +32,7 @@ class GiaoVienController extends Controller
         'error'=>false,
         'message'=> compact('ds_GiaoVien')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -47,7 +47,6 @@ class GiaoVienController extends Controller
     try {
       DB::table('GiaoVien')->insert([
         'gv_ma' => $req->gv_ma,
-        'gv_matKhau' => $req->gv_matKhau,
         'gv_hoTen' => $req->gv_hoTen,
         'gv_ngaySinh' => date('Y-m-d', strtotime($req->gv_ngaySinh)),
         'gv_phai'  =>$req->gv_phai,
@@ -55,13 +54,15 @@ class GiaoVienController extends Controller
         'gv_email' => $req->gv_email,
         'gv_dienThoai' => $req->gv_dienThoai,
         'cm_ma' => $req->cm_ma,
-        'q_ma' => 2
       ]);
+      return response([
+        'error'=>false,
+        'message'=>"Thêm thành công"]);
     } 
     catch (Exception $e) {
       return response([
         'error'=>true,
-        'message'=> $e->getMessage()],200);
+        'message'=>"Thêm thất bại"]);
     }
   }
 
@@ -72,7 +73,7 @@ class GiaoVienController extends Controller
       return response(['error'=>$gv == null,
         'message'=>compact('gv',$gv)], 200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -83,7 +84,6 @@ class GiaoVienController extends Controller
   {
     try {
       DB::table('GiaoVien')->where('gv_ma','=',$id)->update([
-        'gv_matKhau' => $req->gv_matKhau,
         'gv_hoTen' => $req->gv_hoTen,
         'gv_ngaySinh' => date('Y-m-d', strtotime($req->gv_ngaySinh)),
         'gv_phai'  =>$req->gv_phai,
@@ -93,10 +93,10 @@ class GiaoVienController extends Controller
         'cm_ma' => $req->cm_ma
       ]);
       return response([
-        'error'=>true,
+        'error'=>false,
         'message'=> "Cập nhật thành công giáo viên [{$id}]"],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -111,7 +111,7 @@ class GiaoVienController extends Controller
         'error'=>false,
         'message'=> "Xóa thành công giáo viên [{$id}]"],200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -127,7 +127,7 @@ class GiaoVienController extends Controller
         'error'   => false,
         'message' => compact('ds_gv')],200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'   => true,
         'message' => $e->getMessage()],200);

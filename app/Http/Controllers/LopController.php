@@ -18,7 +18,7 @@ class LopController extends Controller
         'error'=>false,
         'message'=> compact('ds_Lop')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -32,7 +32,23 @@ class LopController extends Controller
 
   public function store(Request $req)
   {
-  	# code...
+  	try {
+      DB::table('Lop')->Insert([
+        'l_ma'        => $req->l_ma,
+        'kh_khoaHoc'  => $req->kh_khoaHoc,
+        'p_ma'        => $req->p_ma,
+        'gv_ma'       => $req->gv_ma
+      ]);
+
+      return response([
+          'error'   => false,
+          'message' => "Thêm thành công"],200);
+    } 
+    catch (\Exception $e) {
+      return response([
+        'error'   => false,
+        'message' => "Có lỗi khi thêm lớp"],200);
+    }
   }
 
   public function show($id)
@@ -43,7 +59,7 @@ class LopController extends Controller
         'error'=>false,
         'message'=> compact('ds_Lop')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -55,14 +71,44 @@ class LopController extends Controller
   	# code...
   }
 
-  public function update(Request $req, $id)
+  public function update(Request $req, $l_ma)
   {
-  	# code...
+  	try {
+      DB::table('Lop')
+      ->where('l_ma',$l_ma)
+      ->where('kh_khoaHoc',$req->kh_khoaHoc)->update([
+          'p_ma' => $req->p_ma,
+          'gv_ma'=> $req->gv_ma
+      ]);
+
+      return response([
+        'error'=>false,
+        'message'=> "Sửa lớp thành công" ],200);
+    } 
+    catch (\Exception $e) {
+      return response([
+        'error'=>true,
+        'message'=> "Có lỗi khi sửa lớp"],200);
+    }
   }
 
-  public function destroy($id)
+  public function destroy(Request $req)
   {
-  	# code...
+    try {
+      DB::table('Lop')
+      ->where('l_ma',$req->l_ma)
+      ->where('kh_khoaHoc',$req->kh_khoaHoc)
+      ->delete();
+
+      return response([
+        'error'=>false,
+        'message'=> "Xóa lớp thành công" ],200);
+    } 
+    catch (\Exception $e) {
+      return response([
+        'error'=>true,
+        'message'=> "Có lỗi khi xóa lớp"],200);
+    }
   }
 
   public function dsLopKhoahoc($khoahoc)
@@ -73,7 +119,7 @@ class LopController extends Controller
         'error'=>false,
         'message'=> compact('ds_Lop')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -91,7 +137,7 @@ class LopController extends Controller
         'error'=>false,
         'message'=> compact('ds_Lop')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);

@@ -6,17 +6,6 @@ app.controller('ThongBaoLopController',function($scope,$http,URL_Main){
 		});
 	}
 	fillData();
-	
-	$scope.confirmDelete = function(tbl_ma) {
-		if(confirm('Bạn có chắc muốn xóa không ?')){
-			$http.delete(URL_Main + 'thong-bao-lop/' + tbl_ma).
-			then(function (response) {
-				fillData();
-			},function (error) {
-				console.log(error);
-			});
-		}
-	}
 
 	$scope.sortExpression = 'tbl_ma';
 	$scope.sortReverse = true;
@@ -66,8 +55,18 @@ app.controller('ThongBaoLopController',function($scope,$http,URL_Main){
 					headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				}).then(function(response) {
 					fillData();
-				}, function (error) {
-					console.log(error);
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+				}, function (response) {
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+					
 				}); 
 				break;
 			case "edit":
@@ -79,10 +78,41 @@ app.controller('ThongBaoLopController',function($scope,$http,URL_Main){
 					headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				}).then(function(response) {
 					fillData();
-				}, function (error) {
-					console.log(error);
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+				}, function (response) {
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+					
 				}); 
 				break;
+		}
+	}
+
+
+	$scope.confirmDelete = function(tbl_ma) {
+		if(confirm('Bạn có chắc muốn xóa không ?')){
+			$http.delete(URL_Main + 'thong-bao-lop/' + tbl_ma).
+			then(function (response) {
+				fillData();
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+					};
+			},function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			});
 		}
 	}
 

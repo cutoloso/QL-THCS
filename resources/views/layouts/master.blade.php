@@ -14,7 +14,7 @@
 
   <!-- Custom styles for this template-->
   <link href="{{asset('css/sb-admin-2.css')}}" rel="stylesheet">
-  {{-- <link rel="stylesheet" href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}"> --}}
+  {{-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> --}}
 @yield('head.css')
 @yield('head.js')
 </head>
@@ -48,6 +48,12 @@
           </div>
           <!-- Content Row -->
           <div class="row" style="color: #555">
+            @if(session('message'))
+              <div class="col-md-10 offset-1 text-center alert alert-@if(error==true)'danger'@else 'success' @endif">
+                <strong>{{ session('message') }}</strong>
+              </div>
+            @endif
+
             @yield('body.content')
           </div>
         </div>

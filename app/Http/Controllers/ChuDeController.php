@@ -24,7 +24,7 @@ class ChuDeController extends Controller
 					'error'=>false,
 					'message'=> compact('ds_ChuDe_GVHS','ds_ChuDe_GVPH')],200);
 			} 
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return response([
 					'error'=>true,
 					'message'=> $e->getMessage()],200);
@@ -33,12 +33,23 @@ class ChuDeController extends Controller
 			case '3':
                 # phu huynh
 			try {
+				// chủ đề gv-ph
 				$ds_ChuDe_GVPH = DB::table('ChuDe_GV_PH')->where('ph_ma',$user_name)->get();
+				// chủ đề gv-hs
+				$ds_hs = DB::table('HocSinh')
+				->where('ph_ma','PH100')
+				->get(['hs_ma']);
+				$chudeGVHS = [];
+				foreach ($ds_hs as $hs) {
+					$chuDe = DB::table('ChuDe_GV_HS')->where('hs_ma',$hs->hs_ma)->get();
+					array_push($chudeGVHS, $chuDe);
+				}
+
 				return response([
 					'error'=>false,
-					'message'=> compact('ds_ChuDe_GVPH')],200);
+					'message'=> compact('ds_ChuDe_GVPH','chudeGVHS')],200);
 			} 
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return response([
 					'error'=>true,
 					'message'=> $e->getMessage()],200);
@@ -53,7 +64,7 @@ class ChuDeController extends Controller
 					'error'=>false,
 					'message'=> compact('ds_ChuDe_GVHS')],200);
 			} 
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return response([
 					'error'=>true,
 					'message'=> $e->getMessage()],200);
@@ -72,45 +83,45 @@ class ChuDeController extends Controller
 		try {
 			switch (substr($req->name,0,2)) {
 				case 'GV':
-					if (isset($req->ph_ma)) {
-						DB::table('ChuDe_GV_PH')->insert([
-							'cd_gvph_ten' => $req->cd_ten,
-							'ph_ma' => $req->ph_ma,
-							'gv_ma' => $req->name
-						]);
-					}
-					else{
-						DB::table('ChuDe_GV_HS')->insert([
-							'cd_gvhs_ten' => $req->cd_ten,
-							'hs_ma' => $req->hs_ma,
-							'gv_ma' => $req->name
-						]);
-					}
-					break;
+				if (isset($req->ph_ma)) {
+					DB::table('ChuDe_GV_PH')->insert([
+						'cd_gvph_ten' => $req->cd_ten,
+						'ph_ma' => $req->ph_ma,
+						'gv_ma' => $req->name
+					]);
+				}
+				else{
+					DB::table('ChuDe_GV_HS')->insert([
+						'cd_gvhs_ten' => $req->cd_ten,
+						'hs_ma' => $req->hs_ma,
+						'gv_ma' => $req->name
+					]);
+				}
+				break;
 
 				case 'PH':
-	    		DB::table('ChuDe_GV_PH')->insert([
-						'cd_gvph_ten' => $req->cd_ten,
-						'ph_ma' => $req->name,
-						'gv_ma' => $req->gv_ma
-					]);
-					break;
+				DB::table('ChuDe_GV_PH')->insert([
+					'cd_gvph_ten' => $req->cd_ten,
+					'ph_ma' => $req->name,
+					'gv_ma' => $req->gv_ma
+				]);
+				break;
 				case 'HS':
-		    	DB::table('ChuDe_GV_HS')->insert([
-						'cd_gvhs_ten' => $req->cd_ten,
-						'hs_ma' => $req->name,
-						'gv_ma' => $req->gv_ma
-					]);
-					break;
+				DB::table('ChuDe_GV_HS')->insert([
+					'cd_gvhs_ten' => $req->cd_ten,
+					'hs_ma' => $req->name,
+					'gv_ma' => $req->gv_ma
+				]);
+				break;
 			}
 			return response([
 				'error'=>false,
 				'message'=> "Thêm thành công"],200);
 			
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return response([
 				'error'=>true,
-				'message'=> $e->getMessage()],200);
+				'message'=> "Thêm thất bại"],200);
 		}
 
 
@@ -124,7 +135,7 @@ class ChuDeController extends Controller
 				'error'=>false,
 				'message'=> compact('ChuDe')],200);
 		} 
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -160,7 +171,7 @@ class ChuDeController extends Controller
 				'error'=>false,
 				'message'=> compact('ChuDe')],200);
 		} 
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);

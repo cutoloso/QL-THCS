@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
 class KetQuaTableSeeder extends Seeder
 {
     /**
@@ -11,6 +10,39 @@ class KetQuaTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+    	$faker = Faker\Factory::create();
+    	$ds_hs = DB::table('HocSinh')->where('kh_khoaHoc','2019')->where('l_ma','A')->get();
+    	$ds_toCM = DB::table('ToCM')->whereNotIn('cm_ma',['GT','HH'])->get();
+
+        foreach ($ds_hs as $hs) {
+	        foreach ($ds_toCM as $cm) {
+    	        for ($i=1; $i < 3; $i++) { 
+                    DB::table('KetQua')->insert([
+                        'hs_ma'     => $hs->hs_ma,
+                        'hk_hocKy'  => 1,
+                        'hk_namHoc' => '2018-2019',
+                        // 'mh_ma'      => ($cm->cm_ma).($this->getKhoi($hs->kh_khoaHoc)),
+                        'mh_ma'     => ($cm->cm_ma).'6',
+                        'kq_lan'    => 1,
+                        'kq_Diem'   => $faker->randomFloat(2, 5, 10),
+                        'kq_heSo'    => $i
+                    ]);
+                }
+	        }
+        }
+    }
+    protected function getKhoi($kh_khoaHoc){
+    	$yearNow = date("Y");
+    	$kh_khoaHoc = (int)$kh_khoaHoc;
+    	switch ($kh_khoaHoc) {
+    		case $yearNow:
+    			return 6;
+    		case $yearNow-1:
+    			return 7;
+    		case $yearNow-2:
+    			return 8;
+    		case $yearNow-3:
+    			return 9;
+    	}
     }
 }

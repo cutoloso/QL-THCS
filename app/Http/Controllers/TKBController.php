@@ -84,7 +84,7 @@ class TKBController extends Controller
         'error'=>false,
         'message'=> "Cập nhật thành công"],200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);
@@ -96,10 +96,26 @@ class TKBController extends Controller
     return view('TKB.import');
   }
 
-  public function import()
-  {
-    Excel::import(new TkbImport, request()->file('fileTKB'));
-    return view('TKB.index');
+  public function import($kh_khoaHoc, $hk_hocKy, $l_ma)
+  { 
+    try {
+      DB::table('TKB')
+      ->where('kh_khoaHoc',$kh_khoaHoc)
+      ->where('hk_hocKy',$hk_hocKy)
+      ->where('l_ma',$l_ma)
+      ->delete();
+      
+      Excel::import(new TkbImport, request()->file('fileTKB'));
+
+      return response([
+        'error'=>false,
+        'message'=> "Cập nhật thành công"],200);
+    } 
+    catch (Exception $e) {
+      return response([
+        'error'=>true,
+        'message'=> $e->message() ],200);
+    }
   }
   public function destroy(Request $req)
   {
@@ -114,7 +130,7 @@ class TKBController extends Controller
         'error'=>false,
         'message'=> "Xóa thành công"],200);
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);

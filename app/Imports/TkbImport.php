@@ -13,20 +13,14 @@ class TkbImport implements ToModel
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public static function getGV($kh_khoaHoc, $l_ma, $mh_ma)
+    protected function getGV($kh_khoaHoc, $l_ma, $mh_ma)
     {   
-        if ($mh_ma == 'SHL' || 'HDNGLL') {
-            $gv = DB::table('Lop')
-            ->where('l_ma',$l_ma)
-            ->first(['gv_ma']);
-            return $gv->gv_ma;
-        }
     	$gv = DB::table('Day')
             ->where('kh_khoaHoc',$kh_khoaHoc)
             ->where('l_ma',$l_ma)
             ->where('mh_ma',$mh_ma)
             ->first(['gv_ma']);
-        return $gv==null ? null : $gv->gv_ma;
+        return $gv==null? null:$gv->gv_ma;
     }
 
     public function model(array $row)

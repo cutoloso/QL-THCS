@@ -1,10 +1,13 @@
 app.controller('ChuDeController',function($scope,$http,URL_Main){
-	function fillData(argument) {
+	function fillData() {
 		$http.get(URL_Main + 'chu-de-gop-y').then(function(response){
 			if(typeof(response.data.message.ds_ChuDe_GVHS)!="undefined")
 				$scope.ds_chuDe_GVHS = response.data.message.ds_ChuDe_GVHS;
 			if(typeof(response.data.message.ds_ChuDe_GVPH)!="undefined")
 				$scope.ds_chuDe_GVPH = response.data.message.ds_ChuDe_GVPH;
+			if(typeof(response.data.message.ds_ChuDe_GVPH)!="undefined")
+				$scope.chudeGVHS = response.data.message.chudeGVHS;
+			console.log(response.data.message);
 		});
 	}
 
@@ -46,17 +49,26 @@ app.controller('ChuDeController',function($scope,$http,URL_Main){
 	$scope.save = function (name) {
 		$scope.chude.name = name;
 		var data = $.param($scope.chude);
+  		console.log(data);
+
 		$http({
 		  	method: 'POST',
 		  	url: URL_Main + 'chu-de-gop-y',
 		  	data: data,
 		  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 		  	}).then(function(response) {
-					fillData();
-			  }, function (error) {
-			    console.log(error);
+				fillData();
+				$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+			  }, function (response) {
+			  	$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
 			  }); 
-		console.log($scope.chude);
-
 	}
 });

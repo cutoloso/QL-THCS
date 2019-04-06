@@ -17,7 +17,7 @@ class ThongBaoTruongController extends Controller
 				'error'=>false,
 				'message'=> compact('ds_ThongBaoTruong')],200);
 
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -47,10 +47,10 @@ class ThongBaoTruongController extends Controller
 				}
 				return redirect()->route('dsthongbaotruong');
 			} 
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return response([
 					'error'=>true,
-					'message'=> $e->getMessage()],200);
+					'message'=>"Thêm thất bại"]);
 			}
 		}
 		else{
@@ -67,7 +67,7 @@ class ThongBaoTruongController extends Controller
 			return response([
 				'error'=>false,
 				'message'=> compact('thongBaoTruong')],200);
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -97,7 +97,7 @@ class ThongBaoTruongController extends Controller
 				}
 				return redirect()->route('dsthongbaotruong');
 			} 
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return response([
 					'error'=>true,
 					'message'=> $e->getMessage()],200);
@@ -112,7 +112,7 @@ class ThongBaoTruongController extends Controller
 				]);
 				return redirect()->route('dsthongbaotruong');
 			} 
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -138,7 +138,7 @@ class ThongBaoTruongController extends Controller
 					'message'=> "Xóa thất bại "],200);
 			}
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);

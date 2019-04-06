@@ -21,6 +21,9 @@
 @section('body.title','Danh sách dạy học')
 @section('body.content')
 <div ng-controller="DayController" style="width: 100%;">
+	<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
+	  <strong><% alert.message %></strong>
+	</div>
 	<div class="form-group">
 		<label for="khoi">Khối : </label>
 		<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()" ng->

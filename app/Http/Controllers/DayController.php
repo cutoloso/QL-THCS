@@ -14,7 +14,7 @@ class DayController extends Controller
 			return response([
 				'error'=>false,
 				'message'=>compact('ds_day')]);            
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=>$e->message()]);  
@@ -37,11 +37,11 @@ class DayController extends Controller
 			]);
 			return response([
 				'error'=>false,
-				'message'=>"Thêm thành công"]);            
-		} catch (Exception $e) {
+				'message'=>"Thêm thành công"],200);            
+		} catch (\Exception $e) {
 			return response([
 				'error'=>true,
-				'message'=>$e->message()]);  
+				'message'=>"Thêm thất bại"],200);  
 		}
 	}
 
@@ -56,8 +56,8 @@ class DayController extends Controller
 			->get();
 			return response([
 				'error'=>false,
-				'message'=>compact('ds_day')]);            
-		} catch (Exception $e) {
+				'message'=>compact('ds_day')],200);            
+		} catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=>$e->message()]);  
@@ -71,7 +71,7 @@ class DayController extends Controller
 
 	public function update(Request $req)
 	{
-    try {
+		try {
 			DB::table('Day')
 			->where('mh_ma',$req->mh_ma)
 			->where('l_ma',$req->l_ma)
@@ -81,7 +81,7 @@ class DayController extends Controller
 				'error'=>false,
 				'message'=> "Cập nhật thành công"],200);
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -106,7 +106,7 @@ class DayController extends Controller
 				'error'=>false,
 				'message'=> "Xóa thành công"],200);
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);
@@ -124,7 +124,24 @@ class DayController extends Controller
 			return response([
 				'error'=>false,
 				'message'=>compact('ds_gv')]);            
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
+			return response([
+				'error'=>true,
+				'message'=>$e->message()]);  
+		}
+	}
+	public function getLop($kh_khoaHoc, $gv_ma)
+	{
+		try {
+			$ds_lop = DB::table('Day')
+			->where('gv_ma',$gv_ma)
+			->where('kh_khoaHoc',$kh_khoaHoc)
+			->get(['l_ma']);
+
+			return response([
+				'error'=>false,
+				'message'=>compact('ds_lop')]);            
+		} catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=>$e->message()]);  

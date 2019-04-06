@@ -23,30 +23,30 @@ app.controller('GiaoVienController',function($scope,$http,URL_Main){
 		
 		switch(state){
 			case "add":
-				$scope.frmTitle = "Thêm giáo viên";
-				$scope.readOnly=false;
-				$scope.giaovien = {
-					'gv_ma':'',
-					'gv_matKhau':'',
-					'gv_hoTen':'',
-					'gv_phai':1,
-					'gv_diaChi':'',
-					'gv_email':'',
-					'gv_dienThoai':'',
-					'cm_ma':'T',
-					'q_ma':'2'
-				};
-				break;
+			$scope.frmTitle = "Thêm giáo viên";
+			$scope.readOnly=false;
+			$scope.giaovien = {
+				'gv_ma':'',
+				'gv_matKhau':'',
+				'gv_hoTen':'',
+				'gv_phai':1,
+				'gv_diaChi':'',
+				'gv_email':'',
+				'gv_dienThoai':'',
+				'cm_ma':'T',
+				'q_ma':'2'
+			};
+			break;
 			case "edit":
-				$scope.readOnly=true;
-				$scope.frmTitle = "Sửa giáo viên";
-				$scope.gv_ma = gv_ma;
-				$http.get(URL_Main + 'giao-vien/' + gv_ma).then(function(response){
-					$scope.giaovien = response.data.message.gv;
-					var ns = response.data.message.gv.gv_ngaySinh.toString();
-					$scope.giaovien.gv_ngaySinh = new Date(ns);
-				});
-				break;
+			$scope.readOnly=true;
+			$scope.frmTitle = "Sửa giáo viên";
+			$scope.gv_ma = gv_ma;
+			$http.get(URL_Main + 'giao-vien/' + gv_ma).then(function(response){
+				$scope.giaovien = response.data.message.gv;
+				var ns = response.data.message.gv.gv_ngaySinh.toString();
+				$scope.giaovien.gv_ngaySinh = new Date(ns);
+			});
+			break;
 		}
 		// Hiện form
 		$('#myModal').modal('show');
@@ -65,42 +65,72 @@ app.controller('GiaoVienController',function($scope,$http,URL_Main){
 	$scope.save = function(state,gv_ma) {
 		switch(state){
 			case "add":
-				var data = $.param($scope.giaovien);
-				$http({
-				  	method: 'POST',
-				  	url: URL_Main + 'giao-vien',
-				  	data: data,
-				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-				  	}).then(function(response) {
-						fillData();
-				  	}, function (error) {
-					    console.log(error);
-					  }); 
-					break;
+			var data = $.param($scope.giaovien);
+			$http({
+				method: 'POST',
+				url: URL_Main + 'giao-vien',
+				data: data,
+				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+			}).then(function(response) {
+				fillData();
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			}, function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+				
+			}); 
+			break;
 			case "edit":
-				var data = $.param($scope.giaovien);
-				$http({
-				  	method: 'PUT',
-				  	url: URL_Main + 'giao-vien/' + gv_ma,
-				  	data: data,
-				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-				  	}).then(function(response) {
-							fillData();
-					  	}, function (error) {
-					    console.log(error);
-					  	}); 
-					break;
+			var data = $.param($scope.giaovien);
+			$http({
+				method: 'PUT',
+				url: URL_Main + 'giao-vien/' + gv_ma,
+				data: data,
+				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+			}).then(function(response) {
+				fillData();
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			}, function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+					};
+				
+			}); 
+			break;
 		}
 	}
 
 	$scope.confirmDelete = function(gv_ma) {
 		if(confirm('Bạn có chắc muốn xóa không ?')){
 			$http.delete(URL_Main + 'giao-vien/' + gv_ma).
-				then(function (response) {
-					fillData();
-				},function (error) {
-					console.log(error);
-				});
+			then(function (response) {
+				fillData();
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			},function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+				
+			});
 		}
 	}
 

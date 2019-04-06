@@ -22,6 +22,9 @@
 @section('body.content')
 
 <div ng-controller="GiaoVienController" style="width: 100%;">
+	<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
+	  <strong><% alert.message %></strong>
+	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 		  <tr>
@@ -102,16 +105,6 @@
 		         		<input type="email" class="form-control" id="gv_email" name="gv_email" placeholder="" ng-model="giaovien.gv_email" required="true">
 		         		<span class="text-danger" ng-show="frmGiaoVien.gv_email.$error.required">Bạn chưa nhập email</span>
 		         		<span class="text-danger" ng-show="frmGiaoVien.gv_email.$error.email">Email không hợp lệ</span>         		
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="gv_matKhau">Mật khẩu:</label>
-		         		<input type="password" class="form-control" id="gv_matKhau" name="gv_matKhau" placeholder="" ng-model="giaovien.gv_matKhau" ng-maxlength="32" ng-blur="compare()">
-		         		<span class="text-danger" ng-show="frmGiaoVien.gv_matKhau.$error.maxlength">Mật khẩu không hợp lệ</span>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="gv_matKhau_repeat">Nhập lại mật khẩu:</label>
-		         		<input type="password" class="form-control" id="gv_matKhau_repeat" name="gv_matKhau_repeat" placeholder="" ng-model="giaovien.gv_matKhau_repeat" ng-maxlength="32" ng-blur="compare()">
-		         		<span class="text-danger" ng-show="passError">Mật khẩu không hợp lệ</span>
 		         	</div>
 
 		         	<div class="form-group">

@@ -21,6 +21,9 @@
 @section('body.title','Danh sách học sinh theo lớp')
 @section('body.content')
 <div ng-controller="HocSinhController" style="width: 100%;">
+	<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
+	  <strong><% alert.message %></strong>
+	</div>
 	<div class="form-group">
 		<label for="khoi">Khối : </label>
 		<select name="khoi" id="khoi" ng-model="hocsinh.khoi" ng-change="reLoadPage()" ng->
@@ -133,16 +136,6 @@
 		         			<option value="">Mã - Họ Tên</option>
 		         			<option ng-repeat="ph in ds_ph" ng-value="ph.ph_ma" value="<% ph.ph_ma %>"><% ph.ph_ma %> - <% ph.ph_hoTen%></option>
 		         		</select>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="hs_matKhau">Mật khẩu:</label>
-		         		<input type="password" class="form-control" id="hs_matKhau" name="hs_matKhau" placeholder="" ng-model="hocsinh.hs_matKhau" ng-maxlength="32" ng-blur="compare()">
-		         		<span class="text-danger" ng-show="frmHocSinh.hs_matKhau.$error.maxlength">Mật khẩu không hợp lệ</span>
-		         	</div>
-		         	<div class="form-group">
-		         		<label for="hs_matKhau_repeat">Nhập lại mật khẩu:</label>
-		         		<input type="password" class="form-control" id="hs_matKhau_repeat" name="hs_matKhau_repeat" placeholder="" ng-model="hocsinh.hs_matKhau_repeat" ng-maxlength="32" ng-blur="compare()">
-		         		<span class="text-danger" ng-show="passError">Mật khẩu không hợp lệ</span>
 		         	</div>
 		        
 	      		</div>

@@ -19,7 +19,7 @@ app.controller('DayController',function($scope,$http,URL_Main){
 			$scope.maKhoaHoc = yearNow-0;
 			break;
 		}
-		$http.get(URL_Main + 'lop/'+ $scope.maKhoaHoc +'/khoa-hoc').then(function(response){
+		$http.get('http://localhost/QL-THCS/public/lop/'+ $scope.maKhoaHoc +'/khoa-hoc').then(function(response){
 			$scope.ds_lop = response.data.message.ds_Lop;
 		});
 	}
@@ -120,8 +120,18 @@ $scope.modal = function(state, cm_ma, gv_ma){
 					headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				}).then(function(response) {
 					fillData();
-				}, function (error) {
-					console.log(error);
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+				}, function (response) {
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+					
 				});
 				break;
 			case "edit":
@@ -132,8 +142,18 @@ $scope.modal = function(state, cm_ma, gv_ma){
 					headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				}).then(function(response) {
 					fillData();
-				}, function (error) {
-					console.log(error);
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+				}, function (response) {
+					
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
 				});
 				break; 
 		}
@@ -153,8 +173,18 @@ $scope.modal = function(state, cm_ma, gv_ma){
 				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				}).then(function(response) {
 					fillData();
-				}, function (error) {
-					console.log(error);
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+				}, function (response) {
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+					
 				});
 		}
 	}

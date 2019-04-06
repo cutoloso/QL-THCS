@@ -18,7 +18,7 @@ class PhuHuynhController extends Controller
         'error'=>false,
         'message'=> compact('ds_PhuHuynh')],200);
     } 
-    catch (Exception $e) {
+    catch (\Exception $e) {
       return response([
         'error'=>true,
         'message'=> $e->getMessage()],200);

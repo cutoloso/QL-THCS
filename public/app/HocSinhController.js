@@ -1,17 +1,5 @@
 app.controller('HocSinhController',function($scope,$http,URL_Main){
 
-	// $scope.hocsinh = {
-	// 	'l_ma':'',
-	// 	'kh_khoaHoc': ''
-	// };
-
-	// function fillKhoaHoc() {
-	// 	$http.get(URL_Main + 'khoa-hoc/').then(function(response){
-	// 		$scope.ds_kh = response.data.message.ds_KhoaHoc;
-	// 		// $scope.hocsinh.kh_khoaHoc = $scope.ds_kh[0].kh_khoaHoc;
-	// 	});
-	// }
-	// fillKhoaHoc();
 	var d = new Date();
 	var yearNow = d.getFullYear();
 	function fillLop() {
@@ -29,7 +17,7 @@ app.controller('HocSinhController',function($scope,$http,URL_Main){
 			$scope.maKhoaHoc = yearNow;
 			break;
 		}
-		$http.get(URL_Main + 'lop/'+ $scope.maKhoaHoc +'/khoa-hoc').then(function(response){
+		$http.get('http://localhost/QL-THCS/public/lop/'+ $scope.maKhoaHoc +'/khoa-hoc').then(function(response){
 			$scope.ds_lop = response.data.message.ds_Lop;
 		});
 	}
@@ -134,8 +122,18 @@ $scope.modal = function(state,hs_ma){
 				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 			}).then(function(response) {
 				fillData();
-			}, function (error) {
-				console.log(error);
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			}, function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+				
 			});
 			// $scope.maKhoaHoc = '2015';
 			break;
@@ -148,8 +146,18 @@ $scope.modal = function(state,hs_ma){
 				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 			}).then(function(response) {
 				fillData();
-			}, function (error) {
-				console.log(error);
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			}, function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+				
 			}); 
 			break;
 		}
@@ -160,8 +168,18 @@ $scope.modal = function(state,hs_ma){
 			$http.delete(URL_Main + 'hoc-sinh/' + hs_ma).
 			then(function (response) {
 				fillData();
-			},function (error) {
-				console.log(error);
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			},function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+				
 			});
 		}
 	}

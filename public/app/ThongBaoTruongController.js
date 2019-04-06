@@ -15,14 +15,14 @@ app.controller('ThongBaoTruongController',function($scope,$http,URL_Main){
 
 					location.reload();
 					alert("Thêm s?n ph?m thành công");
-            },
-            error: function(response)
-            {
-            	console.log(response);
-            	alert("Có l?i c?p nh?t s?n ph?m");
-            }
+				},
+				error: function(response)
+				{
+					console.log(response);
+					alert("Có l?i c?p nh?t s?n ph?m");
+				}
 
-          });
+			});
 		}
 		else
 		{
@@ -59,21 +59,21 @@ app.controller('ThongBaoTruongController',function($scope,$http,URL_Main){
 		$scope.state  = state;
 		switch(state){
 			case "add":
-				$scope.frmTitle = "Thêm thông báo";
-				break;
+			$scope.frmTitle = "Thêm thông báo";
+			break;
 			case "edit":
-				$scope.frmTitle = "Sửa giáo viên";
-				$scope.tbt_ma = tbt_ma;
-				$http.get(URL_Main + 'thong-bao-truong/' + tbt_ma).then(function(response){
-					$scope.thongbao = response.data.message.thongBaoTruong;
-					console.log($scope.thongbao);
-					var ngayBD = response.data.message.thongBaoTruong.tbt_ngayBD.toString();
-					$scope.thongbao.tbt_ngayBD = new Date(ngayBD);
-					var ngayKT = response.data.message.thongBaoTruong.tbt_ngayKT.toString();
-					$scope.thongbao.tbt_ngayKT = new Date(ngayKT);
-				});
-				break;
-			}
+			$scope.frmTitle = "Sửa giáo viên";
+			$scope.tbt_ma = tbt_ma;
+			$http.get(URL_Main + 'thong-bao-truong/' + tbt_ma).then(function(response){
+				$scope.thongbao = response.data.message.thongBaoTruong;
+				console.log($scope.thongbao);
+				var ngayBD = response.data.message.thongBaoTruong.tbt_ngayBD.toString();
+				$scope.thongbao.tbt_ngayBD = new Date(ngayBD);
+				var ngayKT = response.data.message.thongBaoTruong.tbt_ngayKT.toString();
+				$scope.thongbao.tbt_ngayKT = new Date(ngayKT);
+			});
+			break;
+		}
 		// Hiện form
 		$('#myModal').modal('show');
 	}
@@ -81,22 +81,22 @@ app.controller('ThongBaoTruongController',function($scope,$http,URL_Main){
 	$scope.save = function(state,tbt_ma) {
 		switch(state){
 			case "add":
-				
-				console.log('ok');
-					break;
+			
+			console.log('ok');
+			break;
 			case "edit":
-				var data = $.param($scope.giaovien);
-				$http({
-				  	method: 'PUT',
-				  	url: URL_Main + 'thong-bao-truong/' + tbt_ma,
-				  	data: data,
-				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-				  	}).then(function(response) {
-							fillData();
-					  	}, function (error) {
-					    console.log(error);
-					  	}); 
-					break;
+			var data = $.param($scope.giaovien);
+			$http({
+				method: 'PUT',
+				url: URL_Main + 'thong-bao-truong/' + tbt_ma,
+				data: data,
+				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+			}).then(function(response) {
+				fillData();
+			}, function (error) {
+				console.log(error);
+			}); 
+			break;
 		}
 	}
 

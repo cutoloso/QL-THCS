@@ -84,17 +84,18 @@
 
     <!-- Nav Item - Thời khóa biểu Collapse Menu -->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#TKBCollapse" aria-expanded="true" aria-controls="TKBCollapse">
+      <a class="nav-link" href="{{route('dstkb')}}">
         <i class="fas fa-calendar-alt"></i>
         <span>Thời khóa biểu</span>
       </a>
-      <div id="TKBCollapse" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Chỉnh sửa Thời khóa biểu</h6>
-          <a class="collapse-item" href="{{route('tkb.import')}}">Cập nhật thời khóa biểu</a>
-          <a class="collapse-item" href="{{route('tkb.view')}}">Xem khóa biểu</a>
-        </div>
-      </div>
+    </li>
+
+    {{-- Nav Item - điểm --}}
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('dsketqua')}}">
+        <i class="fas fa-award"></i>
+        <span>Quản lý điểm</span>
+      </a>
     </li>
 
 
@@ -118,17 +119,10 @@
 
     <!-- Nav Item - điểm Collapse Menu -->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#DiemCollapse" aria-expanded="true" aria-controls="DiemCollapse">
+      <a class="nav-link" href="{{route('quan-ly-diem')}}">
         <i class="fas fa-award"></i>
         <span>Quản lý điểm</span>
       </a>
-      <div id="DiemCollapse" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Danh sách lớp</h6>
-          <a class="collapse-item" href="#">Lop 6a</a>
-          <a class="collapse-item" href="#">Lop 7a</a>
-        </div>
-      </div>
     </li>
 
     <!-- Nav Item - Điểm danh Collapse Menu -->

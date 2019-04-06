@@ -8,18 +8,37 @@
 @endsection
 @section('body.title','Thời khóa biểu')
 @section('body.content')
-<div class="col-md-8 offset-2">
-	<form action="{{ route('import')}}" method="POST" enctype="multipart/form-data">
-		@csrf
-		<h5>Chọn file để cập nhật thời khóa biểu:</h5>
-		<div class="custom-file form-group">
-			<input type="file" class="form-group custom-file-input" id="customFile" name="fileTKB" accept=".csv, .xlsx">
-			<label class="custom-file-label" for="customFile">Chọn file</label>
+<div class="container">
+@if(isset($error))
+	<div class="row">
+		<div class="col-md-12">
+			@if($error==false)
+				<div class="alert alert-success">
+					<strong>{{$message}}</strong>
+				</div>
+			@elseif($error==true)
+				<div class="alert alert-danger">
+					<strong>{{$message}}</strong>
+				</div>
+			@endif
 		</div>
-		<div class="text-center">
-			<button class="btn btn-success" id="btn-sub">Cập nhật</button>
+	</div>
+@endif
+	<div class="row">
+		<div class="col-md-8 offset-2">
+			<form action="{{ route('import')}}" method="POST" enctype="multipart/form-data">
+				@csrf
+				<h5>Chọn file để cập nhật thời khóa biểu:</h5>
+				<div class="custom-file form-group">
+					<input type="file" class="form-group custom-file-input" id="customFile" name="fileTKB" accept=".csv, .xlsx">
+					<label class="custom-file-label" for="customFile">Chọn file</label>
+				</div>
+				<div class="text-center">
+					<button class="btn btn-success" id="btn-sub" onclick="return confirm('Thao tác cập nhật sẽ xóa thời khóa biểu hiện tại và thay bằng thời khóa biểu mới !!!')">Cập nhật</button>
+				</div>
+			</form>
 		</div>
-	</form>
+	</div>
 </div>
 @endsection
 @section('body.js')

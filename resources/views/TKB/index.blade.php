@@ -32,41 +32,49 @@
 @section('body.title','Danh sách học sinh theo lớp')
 @section('body.content')
 <div ng-controller="TKBController" style="width: 100%;">
-	<div class="form-group">
-		<label for="hk_hocKy">Học kỳ : </label>
-		<select name="hk_hocKy" id="hk_hocKy" ng-model="hk_hocKy" ng-change="reLoadPage()">
-			<option value="">---Vui lòng chọn--</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-		</select>
+	<div >
+		<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
+		  <strong><% alert.message %></strong>
+		</div>
+		<div class="form-group">
+			<label for="hk_hocKy">Học kỳ : </label>
+			<select name="hk_hocKy" id="hk_hocKy" ng-model="hk_hocKy" ng-change="reLoadPage()">
+				<option value="">---Vui lòng chọn--</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="khoi">Khối : </label>
+			<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()">
+				<option value="">---Vui lòng chọn--</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="l_ma">Lớp: </label>
+			<select name="l_ma" id="l_ma" ng-model="l_ma" ng-change="reLoadPage()">
+				<option value="">---Vui lòng chọn--</option>
+				<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
+			</select>
+		</div>
 	</div>
-	<div class="form-group">
-		<label for="khoi">Khối : </label>
-		<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()">
-			<option value="">---Vui lòng chọn--</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-		</select>
-	</div>
-	<div class="form-group">
-		<label for="l_ma">Lớp: </label>
-		<select name="l_ma" id="l_ma" ng-model="l_ma" ng-change="reLoadPage()">
-			<option value="">---Vui lòng chọn--</option>
-			<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
-		</select>
-	</div>
-
 	<br>
-	<div class="col-md-10 table-responsive" >
+	<div class=" table-responsive" >
 		<table class="table table-bordered table-hover">
 			<tr>
 				<th ng-click="sort()" style="cursor: pointer;" colspan="2">Thứ / Buoi<i class="fa fa-caret-<% sortReverse? 'up':'down' %>"></i></th>
 				<th>Buổi</th>
 				<th>Môn học</th>
 				<th>Giáo viên</th>
-				<th colspan="2"></th>
+				<th>
+					<a ng-click="showModalImport()" ng-show="update">
+						<i class="fas fa-file-upload"></i>
+					</a>
+				</th>
 			</tr>
 			<tr ng-repeat="tkb in ds_tkb | orderBy : sortExpression: sortReverse">
 				<th ng-if="$index%5 == 0" rowspan="5" ng-bind="thu(tkb.t_ma)" ></th>
@@ -74,12 +82,11 @@
 				<td><% tkb.th_buoi=='s' ? 'Sáng':'Chiều' %></td>
 				<td><% tkb.mh_ma %></td>
 				<td><% tkb.gv_ma %> <% tkb.gv_hoTen %></td>
-				<td class="text-center">
-					<a href="" ng-click="modal('edit',tkb.th_stt, tkb.th_buoi, tkb.t_ma, tkb.l_ma, tkb.mh_ma)" ><i class="fas fa-edit"></i></a>
+				<td>
+					<a href="" ng-click="modal('edit',tkb.th_stt, tkb.th_buoi, tkb.t_ma, tkb.l_ma, tkb.mh_ma)" >
+						<i class="fas fa-edit"></i>
+					</a>
 				</td>
-				<td class="text-center">
-					<a href=""><i class="fas fa-minus" ng-click="confirmDelete(tkb.th_stt, tkb.th_buoi, tkb.t_ma)"></i></a>
-				</td> 
 			</tr>
 		</table>
 	</div>
@@ -90,7 +97,7 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title"><% frmTitle %></h4>
+					<h4 class="modal-title">Import thời khóa biểu của lớp</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 
@@ -106,7 +113,7 @@
 							</select>
 							<span class="text-danger" ng-show="frmTKB.mh_ma.$error.required">Bạn chưa chọn môn học</span>
 						</div>
-
+					</div>
 					<!-- Modal footer -->
 					<div class="modal-footer" >
 						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="frmTKB.$invalid" ng-click="save(state,tkb.mh_ma)">Lưu</button>
@@ -116,6 +123,38 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal import tkb -->
+	<div class="modal fade" id="modalImport">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title"><% frmTitle %></h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<form id="frmTkbImport"  method="POST" enctype="multipart/form-data">
+					@csrf
+					<!-- Modal body -->
+					<div class="modal-body">
+						<h5>Chọn file để cập nhật thời khóa biểu:</h5>
+						<div class="custom-file form-group">
+							<input type="file" class="form-group custom-file-input" id="customFile" name="fileTKB" accept=".csv, .xlsx">
+							<label class="custom-file-label" for="customFile">Chọn file</label>
+						</div>
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" >
+						<button type="submit" class="btn btn-primary" ng-disabled="frmTkbImport.$invalid">Cập nhật</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
 </div>
 
 @endsection

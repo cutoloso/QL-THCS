@@ -48,9 +48,19 @@ app.controller('PhongController',function($scope,$http,URL_Main){
 				  	data: data,
 				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				  	}).then(function(response) {
-							fillData();
-					  }, function (error) {
-					    console.log(error);
+						fillData();
+						$scope.alert = {
+							'show': true,
+							'error' : response.data.error,
+							'message' : response.data.message 
+						};
+					  }, function (response) {
+					  	$scope.alert = {
+							'show': true,
+							'error' : response.data.error,
+							'message' : response.data.message 
+						};
+					    
 					  }); 
 					break;
 			case "edit":
@@ -61,9 +71,19 @@ app.controller('PhongController',function($scope,$http,URL_Main){
 				  	data: data,
 				  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 				  	}).then(function(response) {
-							fillData();
-					  }, function (error) {
-					    console.log(error);
+						fillData();
+						$scope.alert = {
+							'show': true,
+							'error' : response.data.error,
+							'message' : response.data.message 
+						};
+					  }, function (response) {
+					  	$scope.alert = {
+							'show': true,
+							'error' : response.data.error,
+							'message' : response.data.message 
+						};
+					    
 					  }); 
 					break;
 		}
@@ -74,8 +94,18 @@ app.controller('PhongController',function($scope,$http,URL_Main){
 			$http.delete(URL_Main + 'phong/' + p_ma).
 				then(function (response) {
 					fillData();
-				},function (error) {
-					console.log(error);
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+				},function (response) {
+					$scope.alert = {
+						'show': true,
+						'error' : response.data.error,
+						'message' : response.data.message 
+					};
+					
 				});
 		}
 	}

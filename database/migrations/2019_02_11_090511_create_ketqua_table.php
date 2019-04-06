@@ -19,10 +19,10 @@ class CreateKetquaTable extends Migration
             $table->string('hk_namHoc')->comment('Năm học');
             $table->char('mh_ma',6)->comment('Mã môn học');
             $table->unsignedTinyInteger('kq_lan')->default(1)->comment('Kết quả lần');
-            $table->float('kq_Diem',2,2)->comment('Diểm số');
-
+            $table->float('kq_diem')->comment('Diểm số');
+            $table->unsignedTinyInteger('kq_heSo')->comment('Hệ số: 1: Miệng-15p 2: 1 Tiết 3:Thi học kỳ');
             // khóa
-            $table->primary(['hs_ma','hk_hocKy','hk_namHoc','mh_ma','kq_lan']);
+            $table->primary(['hs_ma','hk_hocKy','hk_namHoc','mh_ma','kq_lan','kq_heSo']);
             
             $table->foreign('hs_ma')->references('hs_ma')->on('HocSinh')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign(['hk_hocKy','hk_namHoc'])->references(['hk_hocKy','hk_namHoc'])->on('HocKy')->onDelete('cascade')->onUpdate('cascade');

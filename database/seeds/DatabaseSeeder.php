@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LopTableSeeder::class);
         $this->call(PhuHuynhTableSeeder::class);
         $this->call(HocSinhTableSeeder::class);
-        // $this->call(ChuDe_GV_PHTableSeeder::class);
+        $this->call(KetQuaTableSeeder::class);
         // $this->call(ChuDe_GV_HSTableSeeder::class);
     }
 }

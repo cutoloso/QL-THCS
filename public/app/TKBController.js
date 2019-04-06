@@ -1,5 +1,6 @@
 app.controller('TKBController',function($scope,$http,URL_Main){
 	$scope.tkb = {};
+	$scope.update = false;
 	$scope.thu = function(t_ma) {
 		switch (t_ma) {
 			case 'T2':
@@ -39,15 +40,16 @@ app.controller('TKBController',function($scope,$http,URL_Main){
 			$scope.kh_khoaHoc = yearNow;
 			break;
 		}
-		$http.get(URL_Main + 'lop/'+ $scope.kh_khoaHoc +'/khoa-hoc').then(function(response){
+		$http.get( 'http://localhost/QL-THCS/public/lop/'+ $scope.kh_khoaHoc +'/khoa-hoc').then(function(response){
 			$scope.ds_lop = response.data.message.ds_Lop;
 		});
 	}
 	
 	function fillData() {
 
-		$http.get(URL_Main +'tkb/'+ $scope.hk_hocKy +'/hoc-ky/'+ $scope.kh_khoaHoc +'/khoa-hoc/'+$scope.l_ma+'/ma-lop').then(function(response){
+		$http.get('http://localhost/QL-THCS/public/tkb/'+ $scope.hk_hocKy +'/hoc-ky/'+ $scope.kh_khoaHoc +'/khoa-hoc/'+$scope.l_ma+'/ma-lop').then(function(response){
 			$scope.ds_tkb = response.data.message.ds_tkb;
+			console.log($scope.ds_tkb);
 			console.log('fill data');
 		});
 	}
@@ -58,6 +60,7 @@ $scope.reLoadPage = function() {
 		if (typeof $scope.khoi != "undefined") {
 			fillLop();
 			if (typeof $scope.l_ma != "undefined") {
+				$scope.update = true;
 				fillData();
 				console.log($scope.hk_hocKy +' - '+$scope.khoi+' - '+$scope.l_ma);
 			}
@@ -92,47 +95,92 @@ $scope.modal = function(state, th_stt, th_buoi, t_ma, l_ma, mh_ma){
 	// Hiện form
 	$("#myModal").modal('show');
 }
-	$scope.save = function(state, mh_ma) {
-		$scope.tkb.mh_ma = mh_ma;
+$scope.save = function(state, mh_ma) {
+	$scope.tkb.mh_ma = mh_ma;
 		// $scope.tkb.gv_ma = gv_ma;
 		var data = $.param($scope.tkb);
 		switch(state){
 			case "add":
-				$http({
-					method: 'POST',
-					url: URL_Main + 'tkb',
-					data: data,
-					headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-				}).then(function(response) {
-					fillData();
-				}, function (error) {
-					console.log(error);
-				});
-				break;
+			$http({
+				method: 'POST',
+				url: URL_Main + 'tkb',
+				data: data,
+				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+			}).then(function(response) {
+				fillData();
+			}, function (error) {
+				console.log(error);
+			});
+			break;
 			case "edit":
-				$http({
-					method: 'POST',
-					url: URL_Main + 'tkb/update',
-					data: data,
-					headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-				}).then(function(response) {
-					fillData();
-				}, function (error) {
-					console.log(error);
-				}); 
-				break;
+			$http({
+				method: 'POST',
+				url: URL_Main + 'tkb/update',
+				data: data,
+				headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+			}).then(function(response) {
+				fillData();
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+			}, function (response) {
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
+				console.log(error);
+			}); 
+			break;
 		}
 	}
 
-// 	$scope.confirmDelete = function(hs_ma) {
-// 		if(confirm('Bạn có chắc muốn xóa không ?')){
-// 			$http.delete(URL_Main + 'tkb/' + hs_ma).
-// 			then(function (response) {
-// 				fillData();
-// 			},function (error) {
-// 				console.log(error);
-// 			});
-// 		}
-// 	}
+	$scope.showModalImport = function(){
+		if (confirm("Thao tác này sẽ ghi đè lên thời khóa biểu của lớp "+$scope.khoi+$scope.l_ma+" học kỳ "+$scope.hk_hocKy)) {
+			$("#modalImport").modal('show');
+		}
+	}
 
+	$("#frmTkbImport").on("submit", function(event){
+		event.preventDefault();
+		if($("#fileTKB").val() != ""){
+			$.ajax({
+				url: URL_Main + 'tkb/import/'+$scope.kh_khoaHoc+'/khoa-hoc/'+$scope.hk_hocKy+'/hoc-ky/'+$scope.l_ma+'/lop',
+				method: "POST",
+				data:new FormData(this),
+				dataType: 'JSON',
+				contentType: false,
+				cache: false,
+				processData: false,
+				success: function(response)
+				{
+					$scope.alert = {
+						'show': true,
+						'error' : response.error,
+						'message' : response.message 
+					};
+					console.log("success");
+					fillData();
+				},
+				error: function(response)
+				{
+					$scope.alert = {
+						'show': true,
+						'error' : response.error,
+						'message' : response.message 
+					};
+					console.log(response);
+				}
+
+			});
+			
+		}
+		else
+		{
+			$scope.warning=true;
+		}
+		$("#modalImport").modal('hide');
+	});
 });

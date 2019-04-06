@@ -7,11 +7,17 @@
 	a:link {
 	  	text-decoration: none;
 	}
+	.title{
+		color: #000;
+	}
 </style>
 @endsection
 @section('body.title','Danh sách chủ đề góp ý')
 @section('body.content')
 <div class="col-12" ng-controller="ChuDeController">
+	<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
+	  <strong><% alert.message %></strong>
+	</div>
 	@if(Auth::user()->level == 2)
 		<button class="btn btn-success" ng-click="modal('ph')">Thêm góp ý phụ huynh</button>
 		<button class="btn btn-success" ng-click="modal('hs')">Thêm góp ý học sinh</button>
@@ -19,28 +25,42 @@
 		<button class="btn btn-success" ng-click="modal('gv')">Thêm góp ý giáo viên</button>
 	@endif
 	<hr >
-	@if(Auth::user()->level == 2)
-		<h4>Góp ý của phụ huynh</h4>
+	@if(Auth::user()->level == 2) {{-- giáo viên --}}
+		<h5 class="title">Danh sách chủ đề góp ý với giáo viên</h5>
 		<div class="col-md-10 offset-1 article" ng-repeat="cd_gvph in ds_chuDe_GVPH">
 			<hr>
 			<p class="text-right"> <% cd_gvph.gv_ma%> - <% cd_gvph.ph_ma%></p>
 			<h5> <% cd_gvph.cd_gvph_ten  %> </h5>
 			<p class="text-right"><a href="http://localhost/QL-THCS/public/quan-tri/gop-y/gvph/<% cd_gvph.cd_gvph_ma %>">Trả lời <i class="fas fa-angle-double-right"></i></a></p>
 		</div>
-		<h4>Góp ý của học sinh</h4>
+		<hr>
+		<h5 class="title">Danh sách chủ đề góp ý với học sinh</h5>
 		<div class="col-md-10 offset-1 article" ng-repeat="cd_gvhs in ds_chuDe_GVHS">
 			<hr>
 			<p class="text-right"> <% cd_gvhs.gv_ma%> - <% cd_gvhs.hs_ma%> </p>
 			<h5> <% cd_gvhs.cd_gvhs_ten  %> </h5>
 			<p class="text-right"><a href="http://localhost/QL-THCS/public/quan-tri/gop-y/gvhs/<% cd_gvhs.cd_gvhs_ma %>">Trả lời <i class="fas fa-angle-double-right"></i></a></p>
 		</div>
-	@elseif(Auth::user()->level == 3)
-		<div class="col-md-10 offset-1 article" ng-repeat="cd in ds_chuDe_GVPH">
-			<p class="text-right"> <% cd.ph_ma%> - <% cd.gv_ma%> </p>
-			<h3> <% cd.cd_gvph_ten  %> </h3>
-			<p class="text-right"><a href="http://localhost/QL-THCS/public/quan-tri/gop-y/gvhs/<% cd.cd_gvph_ma %>">Trả lời <i class="fas fa-angle-double-right"></i></a></p>
+	@elseif(Auth::user()->level == 3) {{-- phụ huynh --}}
+		<h5 class="title">Danh sách chủ đề góp ý với phụ huynh</h5>
+		<div class="col-md-10 offset-1 article" ng-repeat="cd_gvph in ds_chuDe_GVPH">
+			<hr>
+			<p class="text-right"> <% cd_gvph.ph_ma%> - <% cd_gvph.gv_ma%> </p>
+			<h5> <% cd_gvph.cd_gvph_ten  %> </h5>
+			<p class="text-right"><a href="http://localhost/QL-THCS/public/quan-tri/gop-y/gvhs/<% cd_gvph.cd_gvph_ma %>">Trả lời <i class="fas fa-angle-double-right"></i></a></p>
 		</div>
-	@elseif(Auth::user()->level == 4)
+		<div ng-repeat="ds_gyhs in chudeGVHS">
+			<hr>
+			<h5 class="title">Danh sách chủ đề góp ý của học sinh <% ds_gyhs[0].hs_ma %> với giáo viên</h5>
+			<div class="col-md-10 offset-1 article" ng-repeat="cd_gvhs in ds_gyhs">
+				<hr>
+				<p class="text-right"> <% cd_gvhs.gv_ma%> - <% cd_gvhs.hs_ma%> </p>
+				<h5> <% cd_gvhs.cd_gvhs_ten  %> </h5>
+				<p class="text-right"><a href="http://localhost/QL-THCS/public/quan-tri/gop-y/gvhs/<% cd_gvhs.cd_gvhs_ma %>">Trả lời <i class="fas fa-angle-double-right"></i></a></p>
+			</div>
+		</div>
+	@elseif(Auth::user()->level == 4) {{-- học sinh --}}
+		<h5 class="title">Danh sách chủ đề góp ý</h5>
 		<div class="col-md-10 offset-1 article" ng-repeat="cd_gvhs in ds_chuDe_GVHS">
 			<hr>
 			<p class="text-right"> <% cd_gvhs.gv_ma%> - <% cd_gvhs.hs_ma%> </p>

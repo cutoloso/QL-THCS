@@ -49,10 +49,10 @@ class GopYController extends Controller
 					'message'=> "Thêm thành công"],200);
 			}
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
-				'message'=> $e->getMessage()],200);
+				'message'=>"Thêm thất bại"]);
 		}
 
 	}
@@ -79,7 +79,7 @@ class GopYController extends Controller
 				'error'=>true,
 				'message'=> compact('ds_GopY')],200);
 		} 
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			return response([
 				'error'=>true,
 				'message'=> $e->getMessage()],200);

@@ -14,9 +14,22 @@
 Route::get('/', function () {
 	return view('welcome');
 });
-	
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('lop/{khoahoc}/khoa-hoc','LopController@dsLopKhoahoc');
+	// Route::get('tkb/{hk_hocKy}/hoc-ky/{kh_khoaHoc}/khoa-hoc/{l_ma}/ma-lop','TKBController@show');
+Route::get('dstkb','TKBController@index')->name('dstkb');
+Route::get('tkb/{hk_hocKy}/hoc-ky/{kh_khoaHoc}/khoa-hoc/{l_ma}/ma-lop','TKBController@show');
+
+Route::get('ket-qua-hoc-tap',function (){
+		return view('khach.diem');
+	})->name('ketquahoctap');
+
+	Route::get('ket-qua/diemTBCN/{hs_ma}/hs-ma/{hk_hocKy}/hoc-ky','KetQuaController@getDiemTBCN');
+	Route::get('ket-qua/{hs_ma}/hs-ma/{hk_hocKy}/hoc-ky','KetQuaController@show');
+
+
 
 Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 	Route::get('/', function () {
@@ -33,7 +46,9 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 
 	Route::apiResource('lop', 'LopController');
 	Route::get('lop/{khoahoc}/khoa-hoc/{khoi}/khoi','LopController@dsLopKhoahocKhoi');
-	Route::get('lop/{khoahoc}/khoa-hoc','LopController@dsLopKhoahoc');
+	// Route::get('lop/{khoahoc}/khoa-hoc','LopController@dsLopKhoahoc');
+
+	Route::post('lop/del','LopController@destroy');
 	Route::get('dslop',function(){
 		return view('lop.index');
 	})->name('dslop');
@@ -42,7 +57,7 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 	Route::get('dshocsinh',function(){
 		return view('hocSinh.index');
 	})->name('dshocsinh');
-	Route::get('hoc-sinh/{khoahoc}/{khoi}','HocSinhController@dsHs');
+	Route::get('hoc-sinh/{khoahoc}/{lop}','HocSinhController@dsHs');
 
 	Route::apiResource('khoa-hoc', 'KhoaHocController');
 	Route::get('dskhoahoc',function(){
@@ -89,25 +104,59 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 
 	Route::get('profile','ProfileController@index')->name('profile');
 
-	Route::get('tkb-import',function ()
-	{
-		return view('TKB.import');
-	})->name('tkb.import');
-	Route::get('tkb','TKBController@index')->name('tkb.view');
-	Route::get('tkb/{hk_hocKy}/hoc-ky/{kh_khoaHoc}/khoa-hoc/{l_ma}/ma-lop','TKBController@show');
-	Route::post('tkb','TKBController@import')->name('import');
+	// Route::get('dstkb','TKBController@index')->name('dstkb');
+	// Route::get('tkb/{hk_hocKy}/hoc-ky/{kh_khoaHoc}/khoa-hoc/{l_ma}/ma-lop','TKBController@show');
+	Route::post('tkb/import/{kh_khoaHoc}/khoa-hoc/{hk_hocKy}/hoc-ky/{l_ma}/lop','TKBController@import')->name('tkb.import');
 	Route::post('tkb/update', 'TKBController@update');
 	Route::post('tkb/del', 'TKBController@destroy');
 	Route::get('day/{kh_khoaHoc}/khoa-hoc/{l_ma}/ma-lop/{mh_ma}/ma-mh', 'DayController@getGV');
 
-
+	Route::get('dsday',function (){
+		return view('day.index');
+	})->name('dsday');
 	Route::apiResource('day', 'DayController')->only(['index', 'store']);
 	Route::get('day/{kh_khoaHoc}/khoa-hoc/{l_ma}/ma-lop', 'DayController@show');
 	Route::post('day/update', 'DayController@update');
 	Route::post('day/del', 'DayController@delete');
-	Route::get('dsday',function (){
-		return view('day.index');
-	})->name('dsday');
-	
+	Route::get('day/{kh_khoaHoc}/khoa-hoc/{gv_ma}/ma-gv', 'DayController@getLop');
+
 	Route::get('mon-hoc/{khoi}/khoi','MonHocController@monHoc_khoi');
+	Route::get('ds-ket-qua',function (){
+		return view('ketQua.index');
+	})->name('dsketqua');
+
+
+
+	Route::get('quan-ly-diem',function (){
+		return view('diem.index');
+	})->name('quan-ly-diem');
+	// Route::apiResource('ket-qua','KetQuaController');
+
+});
+
+Route::get('trang-chu',function(){
+	return view('khach.layouts.master');
+})->name('trang-chu');
+Route::get('lien-he',function(){
+	return view('khach.lienHe.index');
+})->name('lien-he');
+
+Route::get('gioi-thieu/gioi-thieu-chung',function(){
+	return view('khach.gioiThieuChung');
+})->name('gioi-thieu-chung');
+
+Route::get('tkb',function(){
+	return view('khach.tkb');
+})->name('tkb');
+
+
+Route::get('test',function(){
+	return view('diem.index');
+})->name('test');
+Route::get('test2',function(){
+	$ds_mh = DB::table('Day')
+	->where('gv_ma','GV103')
+	->where('kh_khoaHoc','2019')
+	->get(['l_ma']);
+	return $ds_mh;
 });

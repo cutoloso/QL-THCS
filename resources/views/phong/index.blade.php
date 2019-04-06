@@ -37,6 +37,9 @@
 @section('body.content')
 
 <div ng-controller="PhongController" style="max-width: 100%;">
+	<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
+	  <strong><% alert.message %></strong>
+	</div>
 	<div class="table-responsive" >
 		<table class="table table-bordered table-hover">
 		  <tr>

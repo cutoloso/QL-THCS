@@ -35,7 +35,7 @@
 @endsection
 @section('body.title','Danh sách thông báo trường')
 @section('body.content')
-<div ng-controller="ThongBaoTruongController" style="width: 100%;">	
+<div ng-controller="ThongBaoTruongController" style="width: 100%;">
 	<div class="table-responsive" >
 		<table class="table table-bordered table-hover">
 			<tr>

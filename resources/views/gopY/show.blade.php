@@ -72,14 +72,14 @@
     {{-- giáo viên - hoc sinh --}}
       <div ng-if="compare(loai_gy,'gvhs')" ng-repeat="gy in ds_gy">
         <div class="container feedback darker" ng-if="compare(gy.gy_nguoiGY,'{{Auth::user()->name}}')">
-              <img src="/w3images/bandmember.jpg" alt="Avatar" class="right">
+              <img src="{{asset('img/user-profile.png')}}" alt="Avatar" class="img-fluid right">
               <p><% gy.gy_gvhs_noiDung %></p>
               <span class="time-left">
                 <% gy.gy_nguoiGY %>: <% gy.gy_gvhs_tGian %>
               </span>
         </div>
         <div class="container feedback " ng-if="! compare(gy.gy_nguoiGY,'{{Auth::user()->name}}')">
-              <img src="/w3images/bandmember.jpg" alt="Avatar">
+              <img src="{{asset('img/user-profile.png')}}" alt="Avatar">
               <p><% gy.gy_gvhs_noiDung %></p>
               <span class="time-right">
                 <% gy.gy_nguoiGY %>: <% gy.gy_gvhs_tGian %>
@@ -89,14 +89,14 @@
     {{-- giáo viên - phụ huynh --}}
       <div ng-if="compare(loai_gy,'gvph')" ng-repeat="gy in ds_gy">
         <div class="container feedback darker" ng-if="compare(gy.gy_nguoiGY,'{{Auth::user()->name}}')">
-              <img src="/w3images/bandmember.jpg" alt="Avatar" class="right">
+              <img src="{{asset('img/user-profile.png')}}" alt="Avatar" class="img-fluid right">
               <p><% gy.gy_gvph_noiDung %></p>
               <span class="time-left">
                 <% gy.gy_nguoiGY %>: <% gy.gy_gvph_tGian %>
               </span>
         </div>
         <div class="container feedback " ng-if="! compare(gy.gy_nguoiGY,'{{Auth::user()->name}}')">
-              <img src="/w3images/bandmember.jpg" alt="Avatar">
+              <img src="{{asset('img/user-profile.png')}}" alt="Avatar" class="img-fluid">
               <p><% gy.gy_gvph_noiDung %></p>
               <span class="time-right">
                 <% gy.gy_nguoiGY %>: <% gy.gy_gvph_tGian %>
