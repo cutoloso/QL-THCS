@@ -11,7 +11,7 @@ class KhoaHocTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($khoaHoc=2015; $khoaHoc <= 2019; $khoaHoc++) { 
+        for ($khoaHoc=2014; $khoaHoc <= 2019; $khoaHoc++) { 
             DB::table('KhoaHoc')->insert(['kh_khoaHoc'=>$khoaHoc]);
         }
     }

@@ -11,7 +11,7 @@ class KetQuaTableSeeder extends Seeder
     public function run()
     {
     	$faker = Faker\Factory::create();
-    	$ds_hs = DB::table('HocSinh')->where('kh_khoaHoc','2019')->where('l_ma','A')->get();
+    	$ds_hs = DB::table('HocSinh')->where('kh_khoaHoc','2018')->where('l_ma','A')->get();
     	$ds_toCM = DB::table('ToCM')->whereNotIn('cm_ma',['GT','HH'])->get();
 
         foreach ($ds_hs as $hs) {

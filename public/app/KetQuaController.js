@@ -5,16 +5,16 @@ app.controller('KetQuaController',function($scope,$http,URL_Main){
 	function fillLop() {
 		switch ($scope.khoi) {
 			case '9':
-			$scope.kh_khoaHoc = yearNow-3;
+			$scope.kh_khoaHoc = yearNow-4;
 			break;
 			case '8':
-			$scope.kh_khoaHoc = yearNow-2;
+			$scope.kh_khoaHoc = yearNow-3;
 			break;
 			case '7':
-			$scope.kh_khoaHoc = yearNow-1;
+			$scope.kh_khoaHoc = yearNow-2;
 			break;
 			case '6':
-			$scope.kh_khoaHoc = yearNow;
+			$scope.kh_khoaHoc = yearNow-1;
 			break;
 		}
 		$http.get('http://localhost/QL-THCS/public/lop/'+ $scope.kh_khoaHoc +'/khoa-hoc').then(function(response){
@@ -33,7 +33,7 @@ app.controller('KetQuaController',function($scope,$http,URL_Main){
 	// Tính điểm trung bình cả năm của học sinh
 	$scope.diemTBCN = function(hs_ma){
 		var diem = 0;
-		$http.get(URL_Main + 'ket-qua/diemTBCN/'+ hs_ma + '/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky')
+		$http.get('http://localhost/QL-THCS/public/ket-qua/diemTBCN/'+ hs_ma + '/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky')
 		.then(function(response){
 			if (typeof response.data.message.diemTBCN != "undefined") {
 				diem = response.data.message.diemTBCN;
@@ -64,10 +64,10 @@ $scope.sort = function() {
 // form thêm & sửa 
 $scope.modal = function(hs_ma){
 	console.log(hs_ma);
-	$http.get('http://localhost/QL-THCS/public/ket-qua/'+ hs_ma +'/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky').then(function(response){
+	$http.get('http://localhost/QL-THCS/public/ket-qua/'+ hs_ma +'/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky/all/ma-mh').then(function(response){
 		$scope.ds_kq = response.data.message.ds_KetQua;
 		// $scope.diemTBCN(hs_ma);
-	}).then($http.get('http://localhost/QL-THCS/public/ket-qua/diemTBCN/'+ hs_ma + '/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky')
+	}).then($http.get('http://localhost/QL-THCS/public/ket-qua/diemTBCN/'+ hs_ma + '/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky/all/ma-mh')
 	.then(function(response){$scope.diemTBCN = response.data.message.diemTBCN.toPrecision(3) }));
 
 

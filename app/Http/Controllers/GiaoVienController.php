@@ -12,20 +12,6 @@ class GiaoVienController extends Controller
 {
   public function index()
   {
-
-    // try {
-    //   $ds_GiaoVien = DB::table('GiaoVien')->get();
-    //   return response([
-    //     'error'=>false,
-    //     'message'=> compact('ds_GiaoVien')],200);
-    // } 
-    // catch (\Exception $e) {
-    //   return response([
-    //     'error'=>true,
-    //     'message'=> $e->getMessage()],200);
-    // }
-
-    // if ($user->can('view',GiaoVien::class)) {
     try {
       $ds_GiaoVien = DB::table('GiaoVien')->get();
       return response([
@@ -37,9 +23,6 @@ class GiaoVienController extends Controller
         'error'=>true,
         'message'=> $e->getMessage()],200);
     }
-    // } else {
-    //   echo 'Not Authorized.';
-    // }
   }
 
   public function store(Request $req)
@@ -127,6 +110,21 @@ class GiaoVienController extends Controller
         'error'   => false,
         'message' => compact('ds_gv')],200);
     }
+    catch (\Exception $e) {
+      return response([
+        'error'   => true,
+        'message' => $e->getMessage()],200);
+    }
+  }
+
+  public function getToCM($gv_ma)
+  {
+    try {
+      $gv = DB::table('GiaoVien')->where('gv_ma',$gv_ma)->first('cm_ma');
+      return response([
+        'error'   => false,
+        'message' => compact('gv')],200);
+    } 
     catch (\Exception $e) {
       return response([
         'error'   => true,

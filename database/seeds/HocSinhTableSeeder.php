@@ -15,7 +15,7 @@ class HocSinhTableSeeder extends Seeder
       $ma_lop = array('A','B','C','D');
       $stt_hs = 0; //số thứ tự học sinh
       $limit = 30;
-
+      //lớp 9 đã tốt nghiệp
       for ($i=0; $i < sizeof($ma_lop); $i++) {
         $l_ma = $ma_lop[$i];
         for ($j=0; $j < $limit; $j++) { 
@@ -26,14 +26,14 @@ class HocSinhTableSeeder extends Seeder
             'hs_phai'=>$faker->randomElement($array = array(0,1)),
             'hs_diaChi'=>$faker->address,
             'l_ma'=>$l_ma,
-            'kh_khoaHoc'=>'2015'
+            'kh_khoaHoc'=>'2014'
             // 'ph_ma'=>'PH'.$faker->numberBetween(100,120)
           ]);
           $stt_hs ++;
         }
       }
-
-    	$khoaHoc = array('2019','2018','2017','2016');
+      // chưa tốt nghiệp
+    	$khoaHoc = array('2018','2017','2016','2015');
 	    $tang = 1; // tầng 1,2,3,4
 
 	    foreach ($khoaHoc as $kh) {

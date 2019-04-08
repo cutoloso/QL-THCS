@@ -24,25 +24,6 @@
 @section('body.title','Danh sách kết quả điểm')
 @section('body.content')
 <div ng-controller="DiemController" style="width: 100%;">
-	{{-- <div class="form-group">
-		<label for="khoi">Khối : </label>
-		<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()" ng->
-			<option value="">---Vui lòng chọn--</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-		</select>
-	</div>
-
-	<div class="form-group">
-		<label for="l_ma">Lớp: </label>
-		<select name="l_ma" id="l_ma" ng-model="l_ma" ng-change="reLoadPage()">
-			<option value="">---Vui lòng chọn--</option>
-			<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
-		</select>
-	</div> --}}
-
 	<div id="box-search" >
 		<form class="row" name="frmSearch">
 		<div class="form-group col-12 text-center">

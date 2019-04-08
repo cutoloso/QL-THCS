@@ -26,8 +26,8 @@ Route::get('ket-qua-hoc-tap',function (){
 		return view('khach.diem');
 	})->name('ketquahoctap');
 
-	Route::get('ket-qua/diemTBCN/{hs_ma}/hs-ma/{hk_hocKy}/hoc-ky','KetQuaController@getDiemTBCN');
-	Route::get('ket-qua/{hs_ma}/hs-ma/{hk_hocKy}/hoc-ky','KetQuaController@show');
+	Route::get('ket-qua/diemTBCN/{hs_ma}/hs-ma/{hk_hocKy}/hoc-ky/{mh_ma}/ma-mh','KetQuaController@getDiemTBCN');
+	Route::get('ket-qua/{hs_ma}/hs-ma/{hk_hocKy}/hoc-ky/{mh_ma}/ma-mh','KetQuaController@show');
 
 
 
@@ -41,7 +41,6 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 		return view('giaoVien.index');
 	})->name('dsgiaovien');
 	Route::get('giao-vien/{cm_ma}/ma-cm','GiaoVienController@gv_tocm');
-
 	Route::apiResource('to-cm', 'ToCMController');
 
 	Route::apiResource('lop', 'LopController');
@@ -124,8 +123,9 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 	Route::get('ds-ket-qua',function (){
 		return view('ketQua.index');
 	})->name('dsketqua');
-
-
+	Route::post('ket-qua','KetQuaController@store');
+	Route::post('ket-qua/update','KetQuaController@update');
+	Route::post('ket-qua/delete','KetQuaController@destroy');
 
 	Route::get('quan-ly-diem',function (){
 		return view('diem.index');
@@ -154,9 +154,13 @@ Route::get('test',function(){
 	return view('diem.index');
 })->name('test');
 Route::get('test2',function(){
-	$ds_mh = DB::table('Day')
-	->where('gv_ma','GV103')
-	->where('kh_khoaHoc','2019')
-	->get(['l_ma']);
-	return $ds_mh;
+	$ds_diemhs = DB::table('HocSinh')
+	->where('HocSinh.l_ma','A')
+	->where('HocSinh.kh_khoaHoc','2019')
+	->leftJoin('KetQua','HocSinh.hs_ma','=','KetQua.hs_ma')
+	->where('KetQua.hk_hocKy',1)
+	->where('KetQua.hk_namHoc','2019-2020')
+	->limit(10)
+	->get();
+	return $ds_diemhs;
 });

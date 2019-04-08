@@ -38,8 +38,8 @@ class HocSinhController extends Controller
         'q_ma' => 3
       ]);
       return response([
-        'error'=>true,
-        'message'=>"Thêm thất bại"]);
+        'error'=>false,
+        'message'=>"Thêm thành công"]);
     } 
     catch (\Exception $e) {
       return response([

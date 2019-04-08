@@ -28,16 +28,16 @@ app.controller('TKBController',function($scope,$http,URL_Main){
 	function fillLop() {
 		switch ($scope.khoi) {
 			case '9':
-			$scope.kh_khoaHoc = yearNow-3;
+			$scope.kh_khoaHoc = yearNow-4;
 			break;
 			case '8':
-			$scope.kh_khoaHoc = yearNow-2;
+			$scope.kh_khoaHoc = yearNow-3;
 			break;
 			case '7':
-			$scope.kh_khoaHoc = yearNow-1;
+			$scope.kh_khoaHoc = yearNow-2;
 			break;
 			case '6':
-			$scope.kh_khoaHoc = yearNow;
+			$scope.kh_khoaHoc = yearNow-1;
 			break;
 		}
 		$http.get( 'http://localhost/QL-THCS/public/lop/'+ $scope.kh_khoaHoc +'/khoa-hoc').then(function(response){

@@ -7,16 +7,16 @@ app.controller('DayController',function($scope,$http,URL_Main){
 	function fillLop() {
 		switch ($scope.khoi) {
 			case '9':
-			$scope.maKhoaHoc = yearNow-3;
+			$scope.maKhoaHoc = yearNow-4;
 			break;
 			case '8':
-			$scope.maKhoaHoc = yearNow-2;
+			$scope.maKhoaHoc = yearNow-3;
 			break;
 			case '7':
-			$scope.maKhoaHoc = yearNow-1;
+			$scope.maKhoaHoc = yearNow-2;
 			break;
 			case '6':
-			$scope.maKhoaHoc = yearNow-0;
+			$scope.maKhoaHoc = yearNow-1;
 			break;
 		}
 		$http.get('http://localhost/QL-THCS/public/lop/'+ $scope.maKhoaHoc +'/khoa-hoc').then(function(response){
@@ -29,6 +29,7 @@ app.controller('DayController',function($scope,$http,URL_Main){
 		$http.get(URL_Main + 'day/'+ $scope.maKhoaHoc + '/khoa-hoc/'+ $scope.maLop+'/ma-lop').then(function(response){
 			$scope.ds_d = response.data.message.ds_day;
 			arr = $scope.ds_d;
+			console.log('fillData');
 		});
 	}
 
@@ -40,7 +41,6 @@ $scope.reLoadPage = function() {
 			$scope.maLop = $scope.l_ma;
 				fillData();
 				$scope.add = true;
-				console.log('reload');
 		}
 	}
 }

@@ -10,10 +10,10 @@ app.controller('DiemController',function($scope,$http,URL_Main){
 	$scope.modal = function(){
 		console.log($scope.hs_ma);
 		$scope.hs_ma = $scope.hs_ma.toUpperCase();
-		$http.get('http://localhost/QL-THCS/public/ket-qua/'+ $scope.hs_ma +'/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky').then(function(response){
+		$http.get('http://localhost/QL-THCS/public/ket-qua/'+ $scope.hs_ma +'/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky/all/ma-mh').then(function(response){
 			$scope.ds_kq = response.data.message.ds_KetQua;
 			console.log($scope.ds_kq);
-		}).then($http.get('http://localhost/QL-THCS/public/ket-qua/diemTBCN/'+ $scope.hs_ma + '/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky')
+		}).then($http.get('http://localhost/QL-THCS/public/ket-qua/diemTBCN/'+ $scope.hs_ma + '/hs-ma/'+ $scope.hk_hocKy+'/hoc-ky/all/ma-mh')
 		.then(function(response){$scope.diemTBCN = response.data.message.diemTBCN.toPrecision(3) }));
 		// Hiện form
 		$("#myModal").modal('show');

@@ -5,16 +5,16 @@ app.controller('HocSinhController',function($scope,$http,URL_Main){
 	function fillLop() {
 		switch ($scope.hocsinh.khoi) {
 			case '9':
-			$scope.maKhoaHoc = yearNow-3;
+			$scope.maKhoaHoc = yearNow-4;
 			break;
 			case '8':
-			$scope.maKhoaHoc = yearNow-2;
+			$scope.maKhoaHoc = yearNow-3;
 			break;
 			case '7':
-			$scope.maKhoaHoc = yearNow-1;
+			$scope.maKhoaHoc = yearNow-2;
 			break;
 			case '6':
-			$scope.maKhoaHoc = yearNow;
+			$scope.maKhoaHoc = yearNow-1;
 			break;
 		}
 		$http.get('http://localhost/QL-THCS/public/lop/'+ $scope.maKhoaHoc +'/khoa-hoc').then(function(response){
@@ -28,25 +28,8 @@ app.controller('HocSinhController',function($scope,$http,URL_Main){
 		$http.get(URL_Main + 'hoc-sinh/'+ $scope.maKhoaHoc + '/'+ $scope.maLop).then(function(response){
 			$scope.ds_hs = response.data.message.ds_HocSinh;
 		});
+		console.log('fillData');
 	}
-
-	// fillData();
-	// var d = new Date();
-	// $scope.now = d.getFullYear();
-	// $scope.Lop = function(hs_ma) {
-	// 	var hs = {};
-	// 	var kh;
-	// 	$http.get(URL_Main + 'hoc-sinh/' + hs_ma).then(function(response){
-	// 		hs = response.data.message.hs.kh_khoaHoc;
-	// 		kh = hs.kh_khoaHoc;
-	// 	});
-	// 	var d = new Date();
-	// 	now = d.getFullYear();
-	// 	if ((d - now) < 3 ) {
-	// 		return ((d - now )+ 6)+hs.hs_ma;
-	// 	}
-	// 	return '9'+hs.hs_ma;
-	// }
 
 // cập nhật lại bảng sinh viên
 $scope.reLoadPage = function() {
