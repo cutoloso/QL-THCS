@@ -24,7 +24,7 @@ class KetQuaTableSeeder extends Seeder
                         // 'mh_ma'      => ($cm->cm_ma).($this->getKhoi($hs->kh_khoaHoc)),
                         'mh_ma'     => ($cm->cm_ma).'6',
                         'kq_lan'    => 1,
-                        'kq_Diem'   => $faker->randomFloat(2, 5, 10),
+                        'kq_diem'   => $faker->randomFloat(2, 5, 10),
                         'kq_heSo'    => $i
                     ]);
                 }
