@@ -72,11 +72,11 @@ app.controller('TaiKhoanController',function($scope,$http,URL_Main){
 					'message' : response.data.message 
 				};
 			}, function (response) {
-				// $scope.alert = {
-				// 	'show': true,
-				// 	'error' : response.data.error,
-				// 	'message' : response.data.message 
-				// };
+				$scope.alert = {
+					'show': true,
+					'error' : response.data.error,
+					'message' : response.data.message 
+				};
 				console.log(response);
 			}); 
 			break;

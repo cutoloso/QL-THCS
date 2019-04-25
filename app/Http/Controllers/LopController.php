@@ -143,4 +143,20 @@ class LopController extends Controller
         'message'=> $e->getMessage()],200);
     }
   }
+//lấy lớp gv chủ nhiệm
+  public function getMaLop($gv_ma)
+  {
+    try {
+      $lop = DB::table('Lop')
+      ->where('gv_ma',$gv_ma)
+      ->first();
+      return response([
+          'error'=>false,
+          'message'=> compact('lop')],200);
+    } catch (\Exception $e) {
+      return response([
+        'error'=>true,
+        'message'=> $e->getMessage()],200);
+    }
+  }
 }

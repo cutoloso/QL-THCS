@@ -38,7 +38,7 @@ app.controller('ThongBaoTruongController',function($scope,$http,URL_Main){
 
 	
 	function fillData() {
-		$http.get(URL_Main + 'thong-bao-truong').then(function(response){
+		$http.get('http://localhost/QL-THCS/public/thong-bao-truong').then(function(response){
 			$scope.ds_tbt = response.data.message.ds_ThongBaoTruong;
 		});
 	}

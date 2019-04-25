@@ -23,10 +23,12 @@ class CreateThongbaolopTable extends Migration
             $table->string('tbl_tieuDe')->comment('Tiêu đề thông báo');
             $table->string('tbl_noiDung')->comment('Nội dung thông báo');
             $table->char('l_ma',3)->comment('Mã lớp');
+            $table->char('kh_khoaHoc',4)->comment('Niên khóa');
             $table->char('gv_ma',8)->comment('Mã giáo viên');
+
         // khóa
             //$table->primary(['tbl_ma']);
-            $table->foreign('l_ma')->references('l_ma')->on('Lop')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign(['l_ma','kh_khoaHoc'])->references(['l_ma','kh_khoaHoc'])->on('Lop')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('gv_ma')->references('gv_ma')->on('GiaoVien')->onDelete('cascade')->onUpdate('cascade');
         });
     }

@@ -78,12 +78,12 @@ class ChuDeController extends Controller
     	# code...
 	}
 
-	public function store(Request $req)
+	public function store(Request $req, $state)
 	{
 		try {
 			switch (substr($req->name,0,2)) {
 				case 'GV':
-				if (isset($req->ph_ma)) {
+				if ($state=='ph') {
 					DB::table('ChuDe_GV_PH')->insert([
 						'cd_gvph_ten' => $req->cd_ten,
 						'ph_ma' => $req->ph_ma,

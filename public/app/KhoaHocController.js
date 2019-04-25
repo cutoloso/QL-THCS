@@ -17,7 +17,7 @@ app.controller('KhoaHocController',function($scope,$http,URL_Main){
 		$scope.state  = state;	
 		switch(state){
 			case "add":
-				$scope.frmTitle = "Thêm phòng";
+				$scope.frmTitle = "Thêm khóa học";
 				$scope.readOnly=false;
 				$scope.khoahoc = {
 					'kh_ma':'',
@@ -27,7 +27,7 @@ app.controller('KhoaHocController',function($scope,$http,URL_Main){
 				break;
 			case "edit":
 				$scope.readOnly=true;
-				$scope.frmTitle = "Sửa phòng";
+				$scope.frmTitle = "Sửa khóa học";
 				$scope.kh_ma = kh_ma;
 				$http.get(URL_Main + 'khoa-hoc/' + kh_ma).then(function(response){
 					$scope.khoahoc = response.data.message.khoahoc;

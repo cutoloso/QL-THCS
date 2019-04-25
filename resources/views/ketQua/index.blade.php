@@ -24,34 +24,35 @@
 	<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
 		<strong><% alert.message %></strong>
 	</div>
-	<div class="form-group">
-		<label for="khoi">Khối : </label>
-		<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()" ng->
-			<option value="">---Vui lòng chọn--</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-		</select>
-	</div>
+	<div class="row">
+		<div class="form-group col-md-4 text-center">
+			<label for="khoi">Khối : </label>
+			<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()" ng->
+				<option value="">---Vui lòng chọn--</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+			</select>
+		</div>
 
-	<div class="form-group">
-		<label for="l_ma">Lớp: </label>
-		<select name="l_ma" id="l_ma" ng-model="l_ma" {{-- ng-change="reLoadPage() --}}">
-			<option value="">---Vui lòng chọn--</option>
-			<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
-		</select>
-	</div>
+		<div class="form-group  col-md-4 text-center">
+			<label for="l_ma">Lớp: </label>
+			<select name="l_ma" id="l_ma" ng-model="l_ma" {{-- ng-change="reLoadPage() --}}">
+				<option value="">---Vui lòng chọn--</option>
+				<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
+			</select>
+		</div>
 
-	<div class="form-group">
-		<label for="hk_hocKy">Học kỳ: </label>
-		<select name="hk_hocKy" id="hk_hocKy" ng-model="hk_hocKy" ng-change="reLoadPage()" ng->
-			<option value="">---Vui lòng chọn--</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-		</select>
+		<div class="form-group  col-md-4 text-center">
+			<label for="hk_hocKy">Học kỳ: </label>
+			<select name="hk_hocKy" id="hk_hocKy" ng-model="hk_hocKy" ng-change="reLoadPage()" ng->
+				<option value="">---Vui lòng chọn--</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+			</select>
+		</div>
 	</div>
-
 	<br>
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">

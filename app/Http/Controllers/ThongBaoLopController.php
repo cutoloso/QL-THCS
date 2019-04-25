@@ -11,8 +11,21 @@ class ThongBaoLopController extends Controller
 	public function index()
 	{
 		try {
-			$ds_thongBaoLop = DB::table('ThongBaoLop')->get();
+			// if (Auth::user()->level == 2) {//giao vien
+			// 	$name = Auth::user()->name;
+			// 	$ds_thongBaoLop = DB::table('ThongBaoLop')->where('gv_ma',$name)->get();
+			// }
+			// elseif (Auth::user()->level == 4) {//hoc sinh
+			// 	$hs = DB::table('HocSinh')
+			// 	->where('hs_ma',Auth::user()->name)
+			// 	->get(['l_ma','kh_khoaHoc']);
 
+			// 	$ds_thongBaoLop = DB::table('ThongBaoLop')
+			// 	->where('l_ma',$hs[0]->l_ma)
+			// 	->where('kh_khoaHoc',$hs[0]->kh_khoaHoc)
+			// 	->get();
+			// }
+			 $ds_thongBaoLop = DB::table('ThongBaoLop')->get();
 			return response([
 				'error'=>false,
 				'message'=> compact('ds_thongBaoLop')],200);
@@ -43,8 +56,8 @@ class ThongBaoLopController extends Controller
 				'tbl_ngayBD' 	=>$tbl_ngayBD,
 				'tbl_ngayKT' 	=>$tbl_ngayKT,
 				'tbl_noiDung'	=>$req->tbl_noiDung,
-				'l_ma'				=>$l_ma,
-				'gv_ma'				=>$user
+				'l_ma'			=>$l_ma,
+				'gv_ma'			=>$user
 			]);
 
 			return response([

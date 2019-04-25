@@ -21,7 +21,7 @@
 
 <div ng-controller="TaiKhoanController" style="width: 100%;">
 	<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
-	  <strong><% alert.message %></strong>
+		<strong><% alert.message %></strong>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
@@ -75,27 +75,28 @@
 						<div class="form-group">
 							<label for="level">Chức vụ:</label>
 							<select class="custom-select" name="level" id="level" ng-model="taikhoan.level">
-								<option value="1"> Quản trị viên </option>
-								<option value="2"> Giáo viên </option>
-								<option value="3"> Phụ huynh </option>
-								<option value="4"> Học sinh  </option>
+								<option ng-value="1"> Quản trị viên </option>
+								<option ng-value="2"> Giáo viên </option>
+								<option ng-value="3"> Phụ huynh </option>
+								<option ng-value="4"> Học sinh  </option>
 							</select>
 						</div>
 						<div class="form-group">
 							<label for="status">Trạng thái:</label>
-							<input type="text" class="form-control" id="status" name="status" placeholder="" ng-model="taikhoan.status" required="true" ng-maxlength="100">
+							<input ng-model="taikhoan.status" type="radio" ng-value="1"> Hoạt động
+							<input ng-model="taikhoan.status" type="radio" ng-value="0" > Khóa<br>
 							<span class="text-danger" ng-show="frmTaiKhoan.status.$error.required">Bạn chưa nhập họ tên</span>
 						</div>
-						{{-- <div class="form-group">
+						<div class="form-group">
 							<label for="password">Mật khẩu:</label>
-							<input type="password" class="form-control" id="password" name="password" placeholder="" ng-model="taikhoan.password" ng-maxlength="32" ng-blur="compare()">
+							<input type="password" class="form-control" id="password" name="password" placeholder="" ng-model="taikhoan.password" ng-maxlength="32" ng-blur="compare()" ng-readonly="readOnly">
 							<span class="text-danger" ng-show="frmTaiKhoan.password.$error.maxlength">Mật khẩu không hợp lệ</span>
 						</div>
 						<div class="form-group">
 							<label for="password_repeat">Nhập lại mật khẩu:</label>
-							<input type="password" class="form-control" id="password_repeat" name="password_repeat" placeholder="" ng-model="taikhoan.password_repeat" ng-maxlength="32" ng-blur="compare()">
+							<input type="password" class="form-control" id="password_repeat" name="password_repeat" placeholder="" ng-model="taikhoan.password_repeat" ng-maxlength="32" ng-blur="compare()" ng-readonly="readOnly">
 							<span class="text-danger" ng-show="passError">Mật khẩu không hợp lệ</span>
-						</div> --}}
+						</div>
 					</div>
 
 					<!-- Modal footer -->

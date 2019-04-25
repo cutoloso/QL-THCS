@@ -136,4 +136,27 @@ class TKBController extends Controller
         'message'=> $e->getMessage()],200);
     }
   }
+
+  public function getTKBGV($gv_ma, $hk_hocKy)
+  {
+    try {
+      $ds_tkb = DB::table('TKB')
+      ->where('gv_ma',$gv_ma)
+      ->where('hk_hocKy',$hk_hocKy)
+      // ->orderBy('kh_khoaHoc','desc')
+      ->orderBy('l_ma')
+      ->orderBy('t_ma')
+      ->orderBy('th_buoi')
+      ->orderBy('th_stt')
+      ->get();
+      return response([
+        'error'=>false,
+        'message'=> compact('ds_tkb')],200); 
+    } 
+    catch (Exception $e) {
+      return response([
+        'error'=>true,
+        'message'=> $e->getMessage()],200);
+    }
+  }
 }

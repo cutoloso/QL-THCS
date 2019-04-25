@@ -152,12 +152,12 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Tin tức</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">Thông báo</a>
+								<a class="dropdown-item" href="{{route('khach.thongBaoTruong')}}">Thông báo</a>
 								<a class="dropdown-item" href="#">Công khai</a>
 							</div>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Thời khóa biểu</a>
+							<a class="nav-link" href="{{route('tkb')}}">Thời khóa biểu</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{{route('ketquahoctap')}}">Tra cứu kết quả học tập</a>

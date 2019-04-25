@@ -65,7 +65,7 @@ $scope.modal = function(state, cm_ma, gv_ma){
 
 	switch(state){
 		case "add":
-			$scope.frmTitle = "Thêm chuyên môn của giáo viên";
+			$scope.frmTitle = "Thêm giáo viên dạy - môn";
 			$scope.readOnly=false;
 			$scope.day = {
 				'gv_ma'	: '',
@@ -96,7 +96,7 @@ $scope.modal = function(state, cm_ma, gv_ma){
 				$scope.ds_cm = response.data.message.ds_ToCM;
 			});
 			$scope.readOnly=true;
-			$scope.frmTitle = "Sửa chuyên môn của giáo viên";
+			$scope.frmTitle = "Sửa giáo viên dạy - môn";
 			$scope.day.cm_ma = cm_ma;
 			$scope.loadGiaoVien();
 			$scope.day.gv_ma = gv_ma

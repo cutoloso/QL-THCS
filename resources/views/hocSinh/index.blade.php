@@ -20,35 +20,29 @@
 @endsection
 @section('body.title','Danh sách học sinh theo lớp')
 @section('body.content')
-<div ng-controller="HocSinhController" style="width: 100%;">
+<div ng-controller="HocSinhController" class="col-12">
 	<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
 	  <strong><% alert.message %></strong>
 	</div>
-	<div class="form-group">
-		<label for="khoi">Khối : </label>
-		<select name="khoi" id="khoi" ng-model="hocsinh.khoi" ng-change="reLoadPage()" ng->
-			<option value="">---Vui lòng chọn--</option>
- 			<option value="6">6</option>
- 			<option value="7">7</option>
- 			<option value="8">8</option>
- 			<option value="9">9</option>
- 		</select>
-	</div>
-{{-- 	<div class="form-group">
-		<label for="kh_khoaHoc">Khóa hoc: </label>
-		<select name="kh_khoaHoc" id="kh_khoaHoc" ng-model="hocsinh.kh_khoaHoc" ng-change="reLoadPage()">
-			<option value="">---Vui lòng chọn--</option>
- 			<option ng-repeat="kh in ds_kh" ng-value="kh.kh_khoaHoc" value="<% kh.kh_khoaHoc %>"><% kh.kh_khoaHoc %></option>
- 		</select>
-	</div> --}}
-	{{-- <select ng-model="hocsinh.kh_khoaHoc" ng-options="kh.kh_khoaHoc for kh in ds_kh" ng-change="reLoadPage()">
-      </select> --}}
-	<div class="form-group">
-		<label for="l_ma">Lớp: </label>
-		<select name="l_ma" id="l_ma" ng-model="hocsinh.l_ma" ng-change="reLoadPage()">
-			<option value="">---Vui lòng chọn--</option>
- 			<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
- 		</select>
+	<div class="row">
+		<div class="form-group col-md-6 text-center">
+			<label for="khoi">Khối : </label>
+			<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()" ng->
+				<option value="">---Vui lòng chọn--</option>
+	 			<option value="6">6</option>
+	 			<option value="7">7</option>
+	 			<option value="8">8</option>
+	 			<option value="9">9</option>
+	 		</select>
+		</div>
+
+		<div class="form-group  col-md-6 text-center">
+			<label for="l_ma">Lớp: </label>
+			<select name="l_ma" id="l_ma" ng-model="hocsinh.l_ma" ng-change="reLoadPage()">
+				<option value="">---Vui lòng chọn--</option>
+	 			<option ng-repeat="l in ds_lop" ng-value="l.l_ma" value="<% l.l_ma %>"><% l.l_ma %></option>
+	 		</select>
+		</div>
 	</div>
 	{{-- <select ng-model="hocsinh.l_ma" ng-options="l.l_ma for l in ds_lop" ng-change="reLoadPage()">
       </select> --}}

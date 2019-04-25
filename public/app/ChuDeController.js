@@ -53,7 +53,7 @@ app.controller('ChuDeController',function($scope,$http,URL_Main){
 
 		$http({
 		  	method: 'POST',
-		  	url: URL_Main + 'chu-de-gop-y',
+		  	url: URL_Main + 'chu-de-gop-y/'+$scope.state,
 		  	data: data,
 		  	headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
 		  	}).then(function(response) {

@@ -29,14 +29,14 @@
 	}
 </style>
 @endsection
-@section('body.title','Danh sách học sinh theo lớp')
+@section('body.title','Thời khóa biểu')
 @section('body.content')
-<div ng-controller="TKBController" style="width: 100%;">
-	<div >
-		<div class="alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
+<div class="col-12" ng-controller="TKBController" style="width: 100%;">
+	<div class="row ">
+		<div class="col-12 alert alert-<% alert.error == true ? 'danger':'success' %>" ng-show="alert.show">
 		  <strong><% alert.message %></strong>
 		</div>
-		<div class="form-group">
+		<div class="col-md-4 form-group text-center">
 			<label for="hk_hocKy">Học kỳ : </label>
 			<select name="hk_hocKy" id="hk_hocKy" ng-model="hk_hocKy" ng-change="reLoadPage()">
 				<option value="">---Vui lòng chọn--</option>
@@ -44,7 +44,7 @@
 				<option value="2">2</option>
 			</select>
 		</div>
-		<div class="form-group">
+		<div class="col-md-4 form-group text-center">
 			<label for="khoi">Khối : </label>
 			<select name="khoi" id="khoi" ng-model="khoi" ng-change="reLoadPage()">
 				<option value="">---Vui lòng chọn--</option>
@@ -54,7 +54,7 @@
 				<option value="9">9</option>
 			</select>
 		</div>
-		<div class="form-group">
+		<div class="col-md-4 form-group text-center">
 			<label for="l_ma">Lớp: </label>
 			<select name="l_ma" id="l_ma" ng-model="l_ma" ng-change="reLoadPage()">
 				<option value="">---Vui lòng chọn--</option>
@@ -159,5 +159,12 @@
 
 @endsection
 @section('body.js')
+<script>
+	// Add the following code if you want the name of the file appear on select
+	$(".custom-file-input").on("change", function() {
+	  var fileName = $(this).val().split("\\").pop();
+	  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	});
+</script>
 <script type="text/javaScript" src="{{asset('app/TKBController.js')}}"></script>
 @endsection

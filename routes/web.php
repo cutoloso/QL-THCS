@@ -22,13 +22,15 @@ Route::get('lop/{khoahoc}/khoa-hoc','LopController@dsLopKhoahoc');
 Route::get('dstkb','TKBController@index')->name('dstkb');
 Route::get('tkb/{hk_hocKy}/hoc-ky/{kh_khoaHoc}/khoa-hoc/{l_ma}/ma-lop','TKBController@show');
 
+// Route::get('hoc-sinh/{hs_ma}', 'HocSinhController@show');
+	Route::get('thong-bao-truong', 'ThongBaoTruongController@index');
+
 Route::get('ket-qua-hoc-tap',function (){
 		return view('khach.diem');
 	})->name('ketquahoctap');
 
 	Route::get('ket-qua/diemTBCN/{hs_ma}/hs-ma/{hk_hocKy}/hoc-ky/{mh_ma}/ma-mh','KetQuaController@getDiemTBCN');
 	Route::get('ket-qua/{hs_ma}/hs-ma/{hk_hocKy}/hoc-ky/{mh_ma}/ma-mh','KetQuaController@show');
-
 
 
 Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
@@ -42,6 +44,9 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 	})->name('dsgiaovien');
 	Route::get('giao-vien/{cm_ma}/ma-cm','GiaoVienController@gv_tocm');
 	Route::apiResource('to-cm', 'ToCMController');
+	Route::get('giao-vien-dshs',function(){
+		return view('giaoVien.dshs');
+	})->name('giaovien.dshs');
 
 	Route::apiResource('lop', 'LopController');
 	Route::get('lop/{khoahoc}/khoa-hoc/{khoi}/khoi','LopController@dsLopKhoahocKhoi');
@@ -51,8 +56,10 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 	Route::get('dslop',function(){
 		return view('lop.index');
 	})->name('dslop');
-
+	Route::get('lop/ma-gv/{gv_ma}','LopController@getMaLop');
+	// Route::apiResource('hoc-sinh', 'HocSinhController')->except(['show']);
 	Route::apiResource('hoc-sinh', 'HocSinhController');
+
 	Route::get('dshocsinh',function(){
 		return view('hocSinh.index');
 	})->name('dshocsinh');
@@ -74,7 +81,8 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 	Route::get('dsgopy/{loai_chude}/{cd_ma}','GopYController@view');
 	Route::post('gop-y','GopYController@store');
 
-	Route::apiResource('chu-de-gop-y', 'ChuDeController');
+	Route::apiResource('chu-de-gop-y', 'ChuDeController')->except(['store']);
+	Route::post('chu-de-gop-y/{state}', 'ChuDeController@store');
 	Route::get('chu-de-gop-y/{cd_loai}/{cd_ma}', 'ChuDeController@view');
 	Route::get('dschude',function (){
 		return view('gopY.index');
@@ -89,12 +97,16 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 		'create' => 'ThongBaoTruongController.create',
 		'store'=>'ThongBaoTruongController.store',
 		'update'=>'ThongBaoTruongController.update'
-	]);
+	])->except(['index']);
 	
 	Route::apiResource('thong-bao-lop', 'ThongBaoLopController');
 	Route::get('dsthongbaolop',function (){
 		return view('thongBaoLop.index');
 	})->name('dsthongbaolop');
+
+	Route::get('hs-dsthongbaolop',function (){
+		return view('hocSinh.thongBaoLop');
+	})->name('hocsinh.thongbaolop');
 
 	Route::apiResource('tai-khoan', 'UserController');
 	Route::get('dstaikhoan',function (){
@@ -108,6 +120,16 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 	Route::post('tkb/import/{kh_khoaHoc}/khoa-hoc/{hk_hocKy}/hoc-ky/{l_ma}/lop','TKBController@import')->name('tkb.import');
 	Route::post('tkb/update', 'TKBController@update');
 	Route::post('tkb/del', 'TKBController@destroy');
+
+	Route::get('tkb-hs',function(){
+		return view('hocSinh.tkb');
+	})->name('hocSinh.tkb');
+
+	Route::get('tkb-gv',function(){
+		return view('giaoVien.tkb');
+	})->name('giaoVien.tkb');
+	Route::get('tkb-gv/ma-gv/{gv_ma}/hoc-ky/{hk_hocKy}','TKBController@getTKBGV');
+
 	Route::get('day/{kh_khoaHoc}/khoa-hoc/{l_ma}/ma-lop/{mh_ma}/ma-mh', 'DayController@getGV');
 
 	Route::get('dsday',function (){
@@ -126,6 +148,10 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 	Route::post('ket-qua','KetQuaController@store');
 	Route::post('ket-qua/update','KetQuaController@update');
 	Route::post('ket-qua/delete','KetQuaController@destroy');
+	Route::get('ket-qua-hs',function(){
+		return view('hocSinh.diem');
+	})->name('hocSinh.diem');
+
 
 	Route::get('quan-ly-diem',function (){
 		return view('diem.index');
@@ -135,7 +161,7 @@ Route::group(['prefix'=>'quan-tri','middleware'=>'auth'],function (){
 });
 
 Route::get('trang-chu',function(){
-	return view('khach.layouts.master');
+	return view('khach.layouts.home');
 })->name('trang-chu');
 Route::get('lien-he',function(){
 	return view('khach.lienHe.index');
@@ -149,18 +175,21 @@ Route::get('tkb',function(){
 	return view('khach.tkb');
 })->name('tkb');
 
-
+Route::get('thb-truong',function(){
+	return view('khach.thongBaoTruong');
+})->name('khach.thongBaoTruong');
 Route::get('test',function(){
 	return view('diem.index');
 })->name('test');
 Route::get('test2',function(){
-	$ds_diemhs = DB::table('HocSinh')
-	->where('HocSinh.l_ma','A')
-	->where('HocSinh.kh_khoaHoc','2019')
-	->leftJoin('KetQua','HocSinh.hs_ma','=','KetQua.hs_ma')
-	->where('KetQua.hk_hocKy',1)
-	->where('KetQua.hk_namHoc','2019-2020')
-	->limit(10)
+	$tkb = DB::table('TKB')
+	->where('gv_ma','GV141')
+	->where('hk_hocKy',2)
+	->orderBy('kh_khoaHoc')
+	->orderBy('l_ma')
+	->orderBy('t_ma')
+	->orderBy('th_buoi')
+	->orderBy('th_stt')
 	->get();
-	return $ds_diemhs;
+	return $tkb;
 });

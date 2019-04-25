@@ -213,4 +213,5 @@ class KetQuaController extends Controller
         'message'=> "Có lỗi"],200);
     }
   }
+
 }

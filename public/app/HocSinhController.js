@@ -3,7 +3,7 @@ app.controller('HocSinhController',function($scope,$http,URL_Main){
 	var d = new Date();
 	var yearNow = d.getFullYear();
 	function fillLop() {
-		switch ($scope.hocsinh.khoi) {
+		switch ($scope.khoi) {
 			case '9':
 			$scope.maKhoaHoc = yearNow-4;
 			break;
@@ -33,7 +33,7 @@ app.controller('HocSinhController',function($scope,$http,URL_Main){
 
 // cập nhật lại bảng sinh viên
 $scope.reLoadPage = function() {
-	if (typeof $scope.hocsinh.khoi != "undefined") {
+	if (typeof $scope.khoi != "undefined") {
 		fillLop();
 		if (typeof $scope.hocsinh.l_ma != "undefined") {
 			$scope.maLop = $scope.hocsinh.l_ma;

@@ -124,22 +124,36 @@
         <span>Quản lý điểm</span>
       </a>
     </li>
-
-    <!-- Nav Item - Điểm danh Collapse Menu -->
+    <!-- Nav Item - học sinh Menu -->
     <li class="nav-item">
-      <a class="nav-link" href="{{route('dsthongbaolop')}}">
-        <i class="far fa-list-alt"></i>
+      <a class="nav-link" href="{{route('giaovien.dshs')}}">
+        <i class="fas fa-user-graduate"></i>
+        <span>Quản lý học sinh</span>
+      </a>
+    </li>
+
+    <!-- Nav Item - Thời khóa biểu Collapse Menu -->
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('giaoVien.tkb')}}">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Thời khóa biểu</span>
+      </a>
+    </li>
+{{--      <!-- Nav Item - Điểm danh Collapse Menu -->
+    <li class="nav-item">
+      <a class="nav-link" href="{route('dsthongbaolop')Ư">
+        <i class="far fa-lít-alt"></i>
         <span>Điểm danh</span>
       </a>
     </li>
 
     <!-- Nav Item - vi phạm Collapse Menu -->
     <li class="nav-item">
-      <a class="nav-link" href="{{route('dsthongbaolop')}}">
+      <a class="nav-link" href="{route('dsthongbaolop')Ư">
         <i class="fas fa-bell"></i>
         <span>Vi phạm</span>
       </a>
-    </li>
+    </li> --}}
 
     <!-- Nav Item - Thông báo Collapse Menu -->
     <li class="nav-item">
@@ -177,7 +191,7 @@
 
     <!-- Nav Item - Thời khóa biểu của HS -->
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{route('hocSinh.tkb')}}">
         <i class="fas fa-bell"></i>
         <span>Thời khóa biểu</span>
       </a>
@@ -185,7 +199,7 @@
 
     <!-- Nav Item - Điểm của HS -->
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{route('hocSinh.diem')}}">
         <i class="fas fa-award"></i>
         <span>Điểm môn học</span>
       </a>
@@ -196,6 +210,14 @@
       <a class="nav-link" href="{{ route('dschude') }}">
         <i class="fas fa-comments"></i>
         <span>Quản lý góp ý</span>
+      </a>
+    </li>
+    
+    <!-- Nav Item - Thông báo Collapse Menu -->
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('hocsinh.thongbaolop')}}">
+        <i class="fas fa-bell"></i>
+        <span>Quản lý thông báo lớp</span>
       </a>
     </li>
 @endif
