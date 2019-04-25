@@ -32,8 +32,7 @@ class CreateHocsinhTable extends Migration
         // khóa
             $table->primary(['hs_ma']);
             $table->foreign('hs_ma')->references('name')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('l_ma')->references('l_ma')->on('Lop')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('kh_khoaHoc')->references('kh_khoaHoc')->on('Lop')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign(['l_ma','kh_khoaHoc'])->references(['l_ma','kh_khoaHoc'])->on('Lop')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('ph_ma')->references('ph_ma')->on('PhuHuynh')->onDelete('cascade')->onUpdate('cascade');
         });
     }
